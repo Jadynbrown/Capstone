@@ -1,5 +1,5 @@
-package domain;
+package com.domain;
 
 public class CCApplication {
-
+	
 }
