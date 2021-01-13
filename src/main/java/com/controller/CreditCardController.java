@@ -3,13 +3,11 @@ package com.controller;
 import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.bo.CreditCardBO;
-import com.dao.CreditCardRepository;
 import com.domain.CreditCard;
+import com.bo.CreditCardBO;
+
 
 
 @RestController
@@ -23,6 +21,21 @@ public class CreditCardController {
 	@GetMapping
 	public List<CreditCard> getCreditCards(){
 		return cbo.getCreditCards(); 
-		//return cr.findAll(); 
+	}
+	
+	@GetMapping("/{id}")
+	public CreditCard getCreditCardById(@PathVariable(value = "id") int id) {
+		return cbo.getCreditCardById(id); 
+	}
+	
+	@PostMapping
+	public void addCreditCard(@RequestBody CreditCard cc) {
+		cbo.addCreditCard(cc);
+	}
+	
+	
+	@DeleteMapping
+	public void deleteCreditCardById(@PathVariable(value = "id")  int ccId) {
+		cbo.deleteCreditCardById(ccId);
 	}
 }

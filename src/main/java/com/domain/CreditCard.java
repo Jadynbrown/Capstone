@@ -1,6 +1,8 @@
 package com.domain;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,11 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.domain.CCApplication;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -39,30 +42,34 @@ public class CreditCard {
 	@Column(name = "expiry_Date")
 	Date expirationDate; 
 	
-	@Column(name = "customer_Id")
-	int customerId; 
+//	@OneToOne
+//	@JoinColumn(name = "customer_Id")
+//	@JsonIgnore
+//	Customer customer; 
 	
 	//should this be a creditCardApplication Object?
-	//@OneToOne
-	//@JoinColumn(name = "credit_Card_Application_Id")
-	//Transient notation is to allow me to check creditcard uri's while I haven't completed creditcardapplication entity
-	@Transient
+	@OneToOne
+	@JoinColumn(name = "credit_Card_Application_Id")
 	@JsonIgnore
-	CCApplication creditCardApplication; 
+	CreditCardApplication creditCardApplication; 
+	
+	@OneToMany(mappedBy = "creditCard")
+	Set<Transaction> transactions; 
+	
 	
 	public CreditCard() {
 		super();
 	}
 
-	public CreditCard(double limit, double balance, long cardNumber, int cvv, Date expirationDate, int customerId,
-			CCApplication creditCardApplication) {
+	public CreditCard(double limit, double balance, long cardNumber, int cvv, Date expirationDate, Customer customer,
+			CreditCardApplication creditCardApplication) {
 		super();
 		this.limit = limit;
 		this.balance = balance;
 		this.cardNumber = cardNumber;
 		this.cvv = cvv;
 		this.expirationDate = expirationDate;
-		this.customerId = customerId;
+		//this.customer = customer;
 		this.creditCardApplication = creditCardApplication;
 	}
 
@@ -106,22 +113,44 @@ public class CreditCard {
 		this.expirationDate = expirationDate;
 	}
 
-	public int getCustomerId() {
-		return customerId;
-	}
+//	public Customer getCustomer() {
+//		return customer;
+//	}
+//
+//	public void setCustomer(Customer customer) {
+//		this.customer = customer;
+//	}
+	//need a set of transactions?
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
-
-	public CCApplication getCreditCardApplicationId() {
+	public CreditCardApplication getCreditCardApplicationId() {
 		return creditCardApplication;
 	}
 
-	public void setCreditCardApplicationId(CCApplication creditCardApplication) {
+	public void setCreditCardApplicationId(CreditCardApplication creditCardApplication) {
+		this.creditCardApplication = creditCardApplication;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+
+	public CreditCardApplication getCreditCardApplication() {
+		return creditCardApplication;
+	}
+
+	public void setCreditCardApplication(CreditCardApplication creditCardApplication) {
 		this.creditCardApplication = creditCardApplication;
 	} 
 	
+	public Set<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Set<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+
 	
 
 
