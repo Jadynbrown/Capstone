@@ -48,8 +48,8 @@ public interface CreditCardApplicationRepository extends JpaRepository<CreditCar
 	//10. No of credit card rejected along with reasons
 	@Query(value = "SELECT AVG(DATEDIFF(credit_Card_Application_Approval_Date, credit_Card_Application_Apply_Date)) as days  from credit_card_application WHERE credit_Card_Application_Approval_Date IS NOT NULL", nativeQuery = true)
 	List<WaitTimeResponse> averageTimeToApprove();
-	@Query(value = "SELECT AVG(DATEDIFF(credit_Card_Application_Approval_Date, credit_Card_Application_Apply_Date)) as days  from credit_card_application WHERE credit_Card_Application_Approval_Date IS NOT NULL", nativeQuery = true)
-	List<Object> averageTimeToReject();
+	@Query(value = "SELECT AVG(DATEDIFF(credit_Card_Application_Rejection_Date, credit_Card_Application_Apply_Date)) as days  from credit_card_application WHERE credit_Card_Application_Rejection_Date IS NOT NULL", nativeQuery = true)
+	List<WaitTimeResponse> averageTimeToReject();
 	
 	
 	

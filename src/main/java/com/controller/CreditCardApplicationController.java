@@ -91,10 +91,20 @@ public class CreditCardApplicationController {
 		else
 			return null; 
 	}
+	
+	
 	//#10
-	@GetMapping("/averageapprovaltime")
-	public List<WaitTimeResponse>  getAverageTimeToApprove(){
-		return ccAppBo.averageTimeToApprove();
+	@GetMapping(params = "averageof")
+	public List<WaitTimeResponse>  getAverageTimeToApprove(@RequestParam String averageof){
+		if(averageof.toLowerCase().equals("approved")) {
+			return ccAppBo.averageTimeToApprove();
+		}else if (averageof.toLowerCase().equals("rejected")){
+			return ccAppBo.averageTimeToReject();
+		}else {
+			//throw error
+			return null; 
+		}
+		
 	}
 
 

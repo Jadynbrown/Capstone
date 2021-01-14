@@ -54,6 +54,10 @@ public class CreditCardApplicationBO {
 		return ccAppRepo.averageTimeToApprove();
 	}
 	
+	public List<WaitTimeResponse> averageTimeToReject(){
+		return ccAppRepo.averageTimeToReject();
+	}
+	
 	public List<Object> countApprovedByRegion(){
 		return ccAppRepo.countApprovedByRegion(); 
 	}
