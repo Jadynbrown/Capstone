@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.domain.CreditCardApplication;
 import com.domain.StatusDetails;
+import com.domain.WaitTimeResponse;
 import com.bo.CreditCardApplicationBO;
 
 
@@ -90,12 +91,11 @@ public class CreditCardApplicationController {
 		else
 			return null; 
 	}
-
-		
-//	@GetMapping("/averageapprovaltime", params = {"countby"})
-//	public List<Object>  getAverageTimeToApprove(){
-//		return ccAppBo.averageTimeToApprove();
-//	}
+	//#10
+	@GetMapping("/averageapprovaltime")
+	public List<WaitTimeResponse>  getAverageTimeToApprove(){
+		return ccAppBo.averageTimeToApprove();
+	}
 
 
 }

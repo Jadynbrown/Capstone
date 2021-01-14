@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
 import com.domain.CreditCardApplication;
+import com.domain.WaitTimeResponse;
 
 
 
@@ -44,8 +46,10 @@ public interface CreditCardApplicationRepository extends JpaRepository<CreditCar
 	List<CreditCardApplication> approvedDetails(); 
 
 	//10. No of credit card rejected along with reasons
-	@Query(value = "SELECT AVG(DATEDIFF(credit_Card_Application_Approval_Date, credit_Card_Application_Apply_Date)) as AvgDateDifference from credit_card_application WHERE credit_Card_Application_Approval_Date IS NOT NULL", nativeQuery = true)
-	List<Object> averageTimeToApprove();
+	@Query(value = "SELECT AVG(DATEDIFF(credit_Card_Application_Approval_Date, credit_Card_Application_Apply_Date)) as days  from credit_card_application WHERE credit_Card_Application_Approval_Date IS NOT NULL", nativeQuery = true)
+	List<WaitTimeResponse> averageTimeToApprove();
+	@Query(value = "SELECT AVG(DATEDIFF(credit_Card_Application_Approval_Date, credit_Card_Application_Apply_Date)) as days  from credit_card_application WHERE credit_Card_Application_Approval_Date IS NOT NULL", nativeQuery = true)
+	List<Object> averageTimeToReject();
 	
 	
 	

@@ -16,4 +16,6 @@ public interface CreditCardRepository extends JpaRepository <CreditCard, Integer
 		13. Region wise usage of Credit card
 		14. Region wise sale of credit card
  */
+	//13. Region wise usage of Credit card
+	
 }

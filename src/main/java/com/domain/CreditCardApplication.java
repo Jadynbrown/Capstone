@@ -37,8 +37,8 @@ public class CreditCardApplication {
 	@Column(name = "requested_Amount")
 	double requestedAmount; 
 	
-	@Column(name = "region")
-	String region; 
+//	@Column(name = "region")
+//	String region; 
 	
 	@Column(name = "credit_Score")
 	int creditScore; 
@@ -46,8 +46,8 @@ public class CreditCardApplication {
 //	@Column(name = "employment")
 //	String employment; 
 	
-	@Column(name = "income")
-	Double income; 
+//	@Column(name = "income")
+//	Double income; 
 	
 //	@OneToOne
 //	@JoinColumn(name = "customer_Id")
@@ -122,13 +122,13 @@ public class CreditCardApplication {
 		return creditCardApplicationId;
 	}
 
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
-	}
+//	public String getRegion() {
+//		return region;
+//	}
+//
+//	public void setRegion(String region) {
+//		this.region = region;
+//	}
 
 	public int getCreditScore() {
 		return creditScore;
@@ -146,13 +146,13 @@ public class CreditCardApplication {
 //		this.employment = employment;
 //	}
 
-	public Double getIncome() {
-		return income;
-	}
-
-	public void setIncome(Double income) {
-		this.income = income;
-	}
+//	public Double getIncome() {
+//		return income;
+//	}
+//
+//	public void setIncome(Double income) {
+//		this.income = income;
+//	}
 
 	public char getCreditCardApplicationStatus() {
 		return creditCardApplicationStatus;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.domain.CreditCardApplication;
+import com.domain.WaitTimeResponse;
 import com.dao.CreditCardApplicationRepository;
 
 
@@ -49,7 +50,7 @@ public class CreditCardApplicationBO {
 	}
 
 	
-	public List<Object> averageTimeToApprove(){
+	public List<WaitTimeResponse> averageTimeToApprove(){
 		return ccAppRepo.averageTimeToApprove();
 	}
 	

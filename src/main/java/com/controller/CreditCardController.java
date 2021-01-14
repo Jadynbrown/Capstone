@@ -16,7 +16,6 @@ public class CreditCardController {
 	
 	@Autowired
 	CreditCardBO cbo; 
-	//CreditCardRepository cr; 
 	
 	@GetMapping
 	public List<CreditCard> getCreditCards(){
