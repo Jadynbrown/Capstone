@@ -11,7 +11,7 @@ import com.dao.CreditCardRepository;
 
 
 @Service
-public class CreditCardBO { //not sure this ccbo should be extending creditCard repository  and then adding business logic, or if business logic should be in ccrepo
+public class CreditCardBO {
 	@Autowired
 	CreditCardRepository creditCardRepo; 
 	

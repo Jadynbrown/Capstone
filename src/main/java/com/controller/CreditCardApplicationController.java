@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.domain.CreditCardApplication;
+import com.domain.Customer;
 import com.domain.StatusDetails;
 import com.domain.WaitTimeResponse;
 import com.bo.CreditCardApplicationBO;
@@ -28,7 +29,8 @@ import com.bo.CreditCardApplicationBO;
 public class CreditCardApplicationController {
 	
 	@Autowired
-	CreditCardApplicationBO ccAppBo; 
+	CreditCardApplicationBO ccAppBo;
+	Customer c = new Customer(); 
 	
 	
 	@GetMapping
@@ -51,7 +53,7 @@ public class CreditCardApplicationController {
 	}
 	
 	@PutMapping("/{id}")
-	public void updateCreditCardApplication(@RequestBody CreditCardApplication ccApp) {
+	public void updateCresditCardApplication(@RequestBody CreditCardApplication ccApp) {
 		ccAppBo.updateCreditCardApplication(ccApp);
 	}
 	
@@ -92,7 +94,7 @@ public class CreditCardApplicationController {
 			return null; 
 	}
 	
-	
+	// need 9, 11, 12, 13, 14, 15, 16?
 	//#10
 	@GetMapping(params = "averageof")
 	public List<WaitTimeResponse>  getAverageTimeToApprove(@RequestParam String averageof){

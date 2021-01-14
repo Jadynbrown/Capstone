@@ -17,6 +17,8 @@ import com.domain.WaitTimeResponse;
 @Repository
 public interface CreditCardApplicationRepository extends JpaRepository<CreditCardApplication, Integer>{
 	
+	//if there is time these need to be changed to jpql queries
+	
 	//2. Count of credit cards by day, month, year
 	@Query(value = "SELECT count(*) FROM credit_card_application WHERE date(credit_Card_Application_Apply_Date) = date(?1)", nativeQuery = true)
 	List<Object> countApplicationsByDate(Date day); 
@@ -34,7 +36,6 @@ public interface CreditCardApplicationRepository extends JpaRepository<CreditCar
 			+ "on c.credit_Card_Application_Id = ccapp.credit_Card_Application_Id group by c.region;", nativeQuery = true)
 	List<Object> countApprovedByRegion();
 	
-	//if there is time these need to be changed to jpql queries
 	@Query(value = "select c.employment, count(*) from customer c inner join credit_card_application ccapp  \n"
 			+ " on c.credit_Card_Application_Id = ccapp.credit_Card_Application_Id group by c.employment", nativeQuery = true)
 	List<Object> countApprovedByEmployment(); 
