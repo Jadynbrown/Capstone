@@ -4,10 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -31,43 +34,38 @@ public class CreditCardApplication {
 	@Column(name = "credit_Card_Application_Apply_Date")
 	Date applyDate; 
 	
-	@Column(name = "credit_Card_Application_approval_Date")
+	@Column(name = "credit_Card_Application_Approval_Date")
 	Date approvalDate;
+	
+	@Column(name = "credit_Card_Application_Rejection_Date")
+	Date rejectionDate;
 	
 	@Column(name = "requested_Amount")
 	double requestedAmount; 
-	
-//	@Column(name = "region")
-//	String region; 
-	
+		
 	@Column(name = "credit_Score")
 	int creditScore; 
-	
-//	@Column(name = "employment")
-//	String employment; 
-	
-//	@Column(name = "income")
-//	Double income; 
-	
-//	@OneToOne
-//	@JoinColumn(name = "customer_Id")
-//	@JsonIgnore
-////	@Transient
-//	Users user; //int userId;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "customer_credit_card_application", 
+			joinColumns = {@JoinColumn(name = "credit_Card_Application_Id",  insertable = false, updatable = false)}, 
+			inverseJoinColumns = {@JoinColumn(name = "customer_Id",  insertable = false, updatable = false)})
+	Customer customer; 
 
 	public CreditCardApplication() {
 		super();
 	}
 
 	public CreditCardApplication(char credit_Card_Application_Status, String creditCardApplicationDescription, Date applyDate,
-			Date approvalDate, double requestedAmount, Users user) {
+			Date approvalDate, Date rejectionDate, double requestedAmount, Users user) {
 		super();
 		this.creditCardApplicationStatus = credit_Card_Application_Status;
 		this.creditCardApplicationDescription = creditCardApplicationDescription;
 		this.applyDate = applyDate;
 		this.approvalDate = approvalDate;
 		this.requestedAmount = requestedAmount;
-		//this.user = user;
+		this.rejectionDate = rejectionDate; 
 	}
 
 	public char getCredit_Card_Application_Status() {
@@ -102,6 +100,14 @@ public class CreditCardApplication {
 		this.approvalDate = approvalDate;
 	}
 
+	public Date getRejectionDate() {
+		return rejectionDate;
+	}
+
+	public void setRejectionDate(Date rejectionDate) {
+		this.rejectionDate = rejectionDate;
+	}
+
 	public double getRequestedAmount() {
 		return requestedAmount;
 	}
@@ -109,26 +115,9 @@ public class CreditCardApplication {
 	public void setRequestedAmount(double requestedAmount) {
 		this.requestedAmount = requestedAmount;
 	}
-
-//	public Users getUser() {
-//		return user;
-//	}
-//
-//	public void setCustomerId(Users user) {
-//		this.user= user;
-//	}
-
 	public int getCreditCardApplicationId() {
 		return creditCardApplicationId;
 	}
-
-//	public String getRegion() {
-//		return region;
-//	}
-//
-//	public void setRegion(String region) {
-//		this.region = region;
-//	}
 
 	public int getCreditScore() {
 		return creditScore;
@@ -138,30 +127,10 @@ public class CreditCardApplication {
 		this.creditScore = creditScore;
 	}
 
-//	public String getEmployment() {
-//		return employment;
-//	}
-
-//	public void setEmployment(String employment) {
-//		this.employment = employment;
-//	}
-
-//	public Double getIncome() {
-//		return income;
-//	}
-//
-//	public void setIncome(Double income) {
-//		this.income = income;
-//	}
 
 	public char getCreditCardApplicationStatus() {
 		return creditCardApplicationStatus;
 	}
-
-//	public void setUser(Users user) {
-//		this.user = user;
-//	}
-	
 	
 	
 }

@@ -25,7 +25,7 @@ import com.bo.CreditCardApplicationBO;
 
 
 @RestController
-@RequestMapping("/creditcardapplications")
+@RequestMapping("/cardapplications")
 public class CreditCardApplicationController {
 	
 	@Autowired
@@ -46,21 +46,22 @@ public class CreditCardApplicationController {
 		}
 		return ResponseEntity.ok().body(ccApp);
 	}
-	
+	//Adds the given creditcardapplication to the db
 	@PostMapping
 	public void addCreditCardApplications(@RequestBody CreditCardApplication ccApp) {
 		ccAppBo.addCreditCardApplication(ccApp);
 	}
 	
+	//Updates a given creditCardApplication
 	@PutMapping("/{id}")
 	public void updateCresditCardApplication(@RequestBody CreditCardApplication ccApp) {
 		ccAppBo.updateCreditCardApplication(ccApp);
 	}
 	
-
-	@DeleteMapping
-	public void deleteCreditCardApplicationById(@RequestBody int ccAppId) {
-		ccAppBo.deleteCreditCardApplicationById(ccAppId);
+	//
+	@DeleteMapping("/{id}")
+	public void deleteCreditCardApplicationById(@PathVariable int id) {
+		ccAppBo.deleteCreditCardApplicationById(id);
 	}
 	//#2, #4  		Still need error handling on this
 	@GetMapping(params = {"countby"})

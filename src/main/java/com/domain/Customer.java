@@ -1,56 +1,72 @@
 package com.domain;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "customer")
 public class Customer {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "customer_Id")
-	int customer_Id; 
+	Integer customer_Id; 
 	
 	@Column
-	int mobile_Number;
+	Integer mobile_Number;
 	@Column
-	char gender; 
+	Character gender; 
 	@Column
 	Date date_Of_Birth;
 	@Column
-	char marital_Status; 
+	Character marital_Status; 
 	@Column
-	int house_Hold_Size;
+	Integer income; 
 	@Column
-	int income; 
+	Integer ssn;
 	@Column
-	int ssn;
-	@Column
-	int zip_Code;
+	Integer zip_Code;
 	@Column
 	String state; 
 	@Column
 	String region; 
 	@Column
-	int user_Id; 
+	Integer user_Id; 
 	@Column
-	int household_size;
+	Integer household_size;
 	@Column
 	String employment;
 	
+	@Column
+	String name; 
 	
-	@Column
-	int loan_Application_Id;	
-	@Column
-	int credit_Card_Application_Id;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "customer_credit_card_application",
+			joinColumns = {@JoinColumn(name = "customer_Id")},
+			inverseJoinColumns= {@JoinColumn (name = "credit_Card_Application_Id")})
+	Set<CreditCardApplication> creditApplications;
 	
-	@Column
-	int credit_Card_Id;
-	@Column
-	int loan_Account_Id;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "customer_credit_card",
+			joinColumns = {@JoinColumn(name = "customer_Id")}, 
+			inverseJoinColumns = {@JoinColumn(name = "credit_Card_Id")})
+	Set<CreditCard> creditCards; 
+	
+	
 	
 	public int getMobile_Number() {
 		return mobile_Number;
@@ -75,12 +91,6 @@ public class Customer {
 	}
 	public void setMarital_Status(char marital_Status) {
 		this.marital_Status = marital_Status;
-	}
-	public int getHouse_Hold_Size() {
-		return house_Hold_Size;
-	}
-	public void setHouse_Hold_Size(int house_Hold_Size) {
-		this.house_Hold_Size = house_Hold_Size;
 	}
 	public int getIncome() {
 		return income;
@@ -118,12 +128,7 @@ public class Customer {
 	public void setUser_Id(int user_Id) {
 		this.user_Id = user_Id;
 	}
-	public int getCredit_Card_Application_Id() {
-		return credit_Card_Application_Id;
-	}
-	public void setCredit_Card_Application_Id(int credit_Card_Application_Id) {
-		this.credit_Card_Application_Id = credit_Card_Application_Id;
-	}
+
 	public int getHousehold_size() {
 		return household_size;
 	}
@@ -136,28 +141,29 @@ public class Customer {
 	public void setEmployment(String employment) {
 		this.employment = employment;
 	}
-	public int getLoan_Application_Id() {
-		return loan_Application_Id;
-	}
-	public void setLoan_Application_Id(int loan_Application_Id) {
-		this.loan_Application_Id = loan_Application_Id;
-	}
-	public int getCredit_Card_Id() {
-		return credit_Card_Id;
-	}
-	public void setCredit_Card_Id(int credit_Card_Id) {
-		this.credit_Card_Id = credit_Card_Id;
-	}
-	public int getLoan_Account_Id() {
-		return loan_Account_Id;
-	}
-	public void setLoan_Account_Id(int loan_Account_Id) {
-		this.loan_Account_Id = loan_Account_Id;
-	}
 	public int getCustomer_Id() {
 		return customer_Id;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Set<CreditCard> getCreditCards() {
+		return creditCards;
+	}
+	public void setCreditCards(Set<CreditCard> creditCards) {
+		this.creditCards = creditCards;
+	}
+	
+	public Set<CreditCardApplication> getCreditApplications() {
+		return creditApplications;
+	}
+	public void setCreditApplications(Set<CreditCardApplication> creditApplications) {
+		this.creditApplications = creditApplications;
+	}
 	
 	
 }

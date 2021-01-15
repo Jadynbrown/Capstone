@@ -6,10 +6,13 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -42,35 +45,29 @@ public class CreditCard {
 	@Column(name = "expiry_Date")
 	Date expirationDate; 
 	
-//	@OneToOne
-//	@JoinColumn(name = "customer_Id")
-//	@JsonIgnore
-//	Customer customer; 
+	@Column(name = "status")
+	String status;
 	
-	//should this be a creditCardApplication Object?
-	@OneToOne
-	@JoinColumn(name = "credit_Card_Application_Id")
 	@JsonIgnore
-	CreditCardApplication creditCardApplication; 
-	
-	@OneToMany(mappedBy = "creditCard")
-	Set<Transaction> transactions; 
-	
+	@ManyToOne(fetch = FetchType.LAZY)//Unsure if cascade = CascadeType.ALL here, works w/o  it
+	@JoinTable(
+			name = "customer_credit_card",
+			joinColumns = {@JoinColumn(name = "credit_card_id", insertable = false, updatable = false)}, 
+			inverseJoinColumns = {@JoinColumn (name = "customer_id", insertable = false, updatable = false)})
+	Customer customer; 
 	
 	public CreditCard() {
 		super();
 	}
 
-	public CreditCard(double limit, double balance, long cardNumber, int cvv, Date expirationDate, Customer customer,
-			CreditCardApplication creditCardApplication) {
-		super();
+	public CreditCard(Customer customer, double limit, double balance, long cardNumber, int cvv, Date expirationDate, String status) {
 		this.limit = limit;
 		this.balance = balance;
 		this.cardNumber = cardNumber;
 		this.cvv = cvv;
 		this.expirationDate = expirationDate;
-		//this.customer = customer;
-		this.creditCardApplication = creditCardApplication;
+		this.customer = customer;
+		this.status = status;
 	}
 
 	public double getLimit() {
@@ -113,43 +110,51 @@ public class CreditCard {
 		this.expirationDate = expirationDate;
 	}
 
-//	public Customer getCustomer() {
-//		return customer;
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	
+
+//	public CreditCardApplication getCreditCardApplicationId() {
+//		return creditCardApplication;
 //	}
 //
-//	public void setCustomer(Customer customer) {
-//		this.customer = customer;
+//	public void setCreditCardApplicationId(CreditCardApplication creditCardApplication) {
+//		this.creditCardApplication = creditCardApplication;
 //	}
-	//need a set of transactions?
-
-	public CreditCardApplication getCreditCardApplicationId() {
-		return creditCardApplication;
-	}
-
-	public void setCreditCardApplicationId(CreditCardApplication creditCardApplication) {
-		this.creditCardApplication = creditCardApplication;
-	}
 
 	public int getId() {
 		return id;
 	}
 
-
-	public CreditCardApplication getCreditCardApplication() {
-		return creditCardApplication;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setCreditCardApplication(CreditCardApplication creditCardApplication) {
-		this.creditCardApplication = creditCardApplication;
-	} 
-	
-	public Set<Transaction> getTransactions() {
-		return transactions;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public void setTransactions(Set<Transaction> transactions) {
-		this.transactions = transactions;
-	}
+
+//	public CreditCardApplication getCreditCardApplication() {
+//		return creditCardApplication;
+//	}
+//
+//	public void setCreditCardApplication(CreditCardApplication creditCardApplication) {
+//		this.creditCardApplication = creditCardApplication;
+//	} 
+//	
+//	public Set<Transaction> getTransactions() {
+//		return transactions;
+//	}
+//
+//	public void setTransactions(Set<Transaction> transactions) {
+//		this.transactions = transactions;
+//	}
 
 	
 

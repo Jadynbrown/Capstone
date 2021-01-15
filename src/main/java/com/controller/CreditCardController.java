@@ -32,7 +32,13 @@ public class CreditCardController {
 		cbo.addCreditCard(cc);
 	}
 	
-	@DeleteMapping
+	@PutMapping
+	public void updateCreditCard(@RequestBody CreditCard cc) {
+		cbo.updateCreditCard(cc);
+	}
+	
+	
+	@DeleteMapping("/{id}") // deletion caries out through customer that has this cc mapped! 
 	public void deleteCreditCardById(@PathVariable(value = "id")  int ccId) {
 		cbo.deleteCreditCardById(ccId);
 	}
