@@ -41,50 +41,6 @@ public class CustomerController {
 	@DeleteMapping("/{id}") 
 	public void deleteCustomerById(@PathVariable(value = "id")  int custId) {
 		customerBo.deleteById(custId);
-	}
-				//--------------- CREDIT CARD MAPPINGS ------------------ //
-	//Adds a new creditCard to customer
-	@PostMapping("{customerId}/creditcards")
-	public Customer addcreditcard(@RequestBody CreditCard cc, @PathVariable(value = "customerId") int customerId) {
-		return customerBo.addCreditCard(customerId, cc);
-	}
-	//Gets and returns a specific card from a customer
-	@GetMapping("{customerId}/creditcards/{cardId}")
-	public CreditCard getcreditcard(@PathVariable(value = "customerId") int customerId, 
-									 @PathVariable(value = "cardId") int cardId){
-		return customerBo.getCreditCard(customerId, cardId);
-	}
-	//Deletes a specific card from a specific customer
-	@DeleteMapping("{customerId}/creditcards/{cardId}")
-	public Customer removecreditcard(@PathVariable(value = "customerId") int customerId, 
-									 @PathVariable(value = "cardId") int cardId){
-		return customerBo.removeCreditCard(customerId, cardId);
-	}
-	//Need a update card method for a customer
-	//@PutMapping("{customerId}/creditcards/{cardId}")  <--- THATS WHERE I'M STOPPING FOR CC's
 	
-	
-			//--------------- CREDIT CARD APPLICATION MAPPINGS ------------------ //
-	@PostMapping("{customerId}/cardapplications")
-	public Customer addCardApplication(@RequestBody CreditCardApplication cardApp, 
-			@PathVariable (value = "customerId") int customerId) {
-		return customerBo.addCardApplication(customerId, cardApp);
-	}
-	//CreditCard applications needs the same mappings as there are for creditcards
-	
-	// begin work on creditcard application entities. crud operations -> need approve ccApp with cascade
-	
-	//Remember that entites can  be created alone, 
-	//and THEN if you edit the relationship table in sql, the entities are updated! 
-	
-	
-				//--------------- LOAN MAPPINGS ------------------ //
-	
-	
-	
-		//--------------- LOAN APPLICATION MAPPINGS ------------------ //
-	
-	
-	
-	
+	}	
 }

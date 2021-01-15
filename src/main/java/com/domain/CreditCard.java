@@ -48,13 +48,20 @@ public class CreditCard {
 	@Column(name = "status")
 	String status;
 	
+//	@JsonIgnore
+//	@ManyToOne(fetch = FetchType.LAZY)//Unsure if cascade = CascadeType.ALL here, works w/o  it
+//	@JoinTable(
+//			name = "customer_credit_card",
+//			joinColumns = {@JoinColumn(name = "credit_card_id", insertable = false, updatable = false)}, 
+//			inverseJoinColumns = {@JoinColumn (name = "customer_id", insertable = false, updatable = false)})
+	//Customer customer;
+	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)//Unsure if cascade = CascadeType.ALL here, works w/o  it
-	@JoinTable(
-			name = "customer_credit_card",
-			joinColumns = {@JoinColumn(name = "credit_card_id", insertable = false, updatable = false)}, 
-			inverseJoinColumns = {@JoinColumn (name = "customer_id", insertable = false, updatable = false)})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "customer_Id")
 	Customer customer; 
+	
+
 	
 	public CreditCard() {
 		super();
@@ -118,14 +125,6 @@ public class CreditCard {
 		this.customer = customer;
 	}
 	
-
-//	public CreditCardApplication getCreditCardApplicationId() {
-//		return creditCardApplication;
-//	}
-//
-//	public void setCreditCardApplicationId(CreditCardApplication creditCardApplication) {
-//		this.creditCardApplication = creditCardApplication;
-//	}
 
 	public int getId() {
 		return id;

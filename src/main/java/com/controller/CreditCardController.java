@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.domain.CreditCard;
+import com.domain.Customer;
 import com.bo.CreditCardBO;
 
 
@@ -27,22 +28,21 @@ public class CreditCardController {
 		return cbo.getCreditCardById(id); 
 	}
 	
-	@PostMapping
-	public void addCreditCard(@RequestBody CreditCard cc) {
-		cbo.addCreditCard(cc);
+	@PostMapping()
+	public CreditCard addCreditCard(@RequestBody CreditCard cc, @RequestParam int customerid) {
+		return cbo.addCreditCard(cc, customerid);
 	}
 	
 	@PutMapping
-	public void updateCreditCard(@RequestBody CreditCard cc) {
-		cbo.updateCreditCard(cc);
+	public CreditCard updateCreditCard(@RequestBody CreditCard cc) {
+		return cbo.updateCreditCard(cc);
 	}
 	
 	
-	@DeleteMapping("/{id}") // deletion caries out through customer that has this cc mapped! 
-	public void deleteCreditCardById(@PathVariable(value = "id")  int ccId) {
-		cbo.deleteCreditCardById(ccId);
+	@DeleteMapping("/{id}") 
+	public void deleteCreditCardById(@PathVariable(value = "id")  int id) {
+		cbo.deleteCreditCardById(id);
 	}
-	
 	
 	
 }
