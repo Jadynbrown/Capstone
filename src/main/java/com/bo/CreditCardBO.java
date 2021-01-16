@@ -32,13 +32,13 @@ public class CreditCardBO {
 			return null;
 	}
 	
-	public CreditCard addCreditCard(CreditCard cc, int customerId) {
+	public Customer addCreditCard(CreditCard cc, int customerId) {
 		Customer c = customerBo.findById(customerId);
 		if(c != null) {
 			cc.setCustomer(c);
 			c.getCreditCards().add(cc);
 			customerBo.save(c);
-			return cc;
+			return c;
 		}
 		return null; //Customer not found should be thrown
 	}
@@ -46,15 +46,18 @@ public class CreditCardBO {
 	public void deleteCreditCardById(int ccId) {
 		creditCardRepo.deleteById(ccId);
 	}
-
-	public CreditCard updateCreditCard(CreditCard cc) {
-		Optional<CreditCard> cardFromDb = creditCardRepo.findById(cc.getId());
+	
+	//Currently my updates need to take in an entire object! No partial updates.
+	public Customer updateCreditCard(CreditCard cc, int cardId) {
+		Optional<CreditCard> cardFromDb = creditCardRepo.findById(cardId);
 		if(cardFromDb.isPresent()) {
+			Customer customer = cardFromDb.get().getCustomer();
+			cc.setCustomer(customer);
+			cc.setId(cardId);
 			creditCardRepo.save(cc);
-			
-			return cc; 
+			return customer; 
 		}else {
-			return null; //Handle this Exception 
+			return null; //Handle this Exception, invalid card id 
 		}
 	}
 	

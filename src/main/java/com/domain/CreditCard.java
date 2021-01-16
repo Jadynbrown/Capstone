@@ -57,7 +57,7 @@ public class CreditCard {
 	//Customer customer;
 	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_Id")
 	Customer customer; 
 	
@@ -79,6 +79,10 @@ public class CreditCard {
 
 	public double getLimit() {
 		return limit;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setLimit(double limit) {
@@ -125,7 +129,6 @@ public class CreditCard {
 		this.customer = customer;
 	}
 	
-
 	public int getId() {
 		return id;
 	}

@@ -53,8 +53,9 @@ public class CreditCardApplicationController {
 	}
 	
 	//Updates a given creditCardApplication
-	@PutMapping("/{id}")
-	public void updateCresditCardApplication(@RequestBody CreditCardApplication ccApp) {
+	//@PutMapping("/{id}")
+	@PutMapping
+	public void updateCreditCardApplication(@RequestBody CreditCardApplication ccApp) {
 		ccAppBo.updateCreditCardApplication(ccApp);
 	}
 	

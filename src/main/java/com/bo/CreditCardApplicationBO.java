@@ -94,12 +94,14 @@ public class CreditCardApplicationBO {
 		ccAppRepo.deleteById(ccAppId);
 	}
 
+	//Currently my updates need to take in an entire object! No partial updates.
 	public CreditCardApplication updateCreditCardApplication(CreditCardApplication ccApp) {
-		CreditCardApplication existingApp = ccAppRepo.findById(ccApp.getCreditCardApplicationId()).orElse(null);
-		existingApp.setApprovalDate(ccApp.getApprovalDate());
-		existingApp.setCreditCardApplicationStatus(ccApp.getCredit_Card_Application_Status());
-		existingApp.setCreditCardApplicationDescription(ccApp.getCreditCardApplicationDescription());
-		return ccAppRepo.save(existingApp); 
+		Optional <CreditCardApplication> existingApp = ccAppRepo.findById(ccApp.getCreditCardApplicationId());
+		if(existingApp.isPresent()) {
+			ccAppRepo.save(existingApp.get());
+			return ccApp;
+		}
+		return null; 
 	}
 
 	

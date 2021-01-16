@@ -147,6 +147,9 @@ public class Customer {
 		return customer_Id;
 	}
 	
+	public void setCustomer_Id(Integer customer_Id) {
+		this.customer_Id = customer_Id;
+	}
 	public String getName() {
 		return name;
 	}
