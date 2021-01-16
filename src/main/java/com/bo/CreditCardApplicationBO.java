@@ -4,11 +4,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.domain.CreditCardApplication;
+import com.domain.Customer;
 import com.domain.WaitTimeResponse;
 import com.dao.CreditCardApplicationRepository;
 
@@ -18,6 +20,9 @@ import com.dao.CreditCardApplicationRepository;
 public class CreditCardApplicationBO {
 	@Autowired
 	CreditCardApplicationRepository ccAppRepo; 
+	
+	@Autowired
+	CustomerBO customerBo; 
 	
 	public List<Object> countApplicationsByMonth(){
 		return ccAppRepo.countApplicationsByMonth();
@@ -74,8 +79,15 @@ public class CreditCardApplicationBO {
 		return ccAppRepo.findById(id).orElse(null);
 	}
 	
-	public void addCreditCardApplication(CreditCardApplication ccApp) {
-		ccAppRepo.save(ccApp); 
+	public CreditCardApplication addCreditCardApplication(CreditCardApplication ccApp, int customerId) {
+		Customer customer = customerBo.findById(customerId);
+		if(customer != null) {
+			ccApp.setCustomer(customer);
+			customer.getCreditCardApplications().add(ccApp);
+			customerBo.save(customer);
+			return ccApp; 
+		}
+		return null; 
 	}
 	
 	public void deleteCreditCardApplicationById(int ccAppId) {

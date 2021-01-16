@@ -57,7 +57,8 @@ public class Customer {
 //			joinColumns = {@JoinColumn(name = "customer_Id")},
 //			inverseJoinColumns= {@JoinColumn (name = "credit_Card_Application_Id")})
 //	Set<CreditCardApplication> creditApplications;
-	
+	@OneToMany(mappedBy = "customer" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	Set<CreditCardApplication> creditCardApplications; 
 	
 //	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	@JoinTable(
@@ -157,6 +158,12 @@ public class Customer {
 	}
 	public void setCreditCards(Set<CreditCard> creditCards) {
 		this.creditCards = creditCards;
+	}
+	public Set<CreditCardApplication> getCreditCardApplications() {
+		return creditCardApplications;
+	}
+	public void setCreditCardApplications(Set<CreditCardApplication> creditCardApplications) {
+		this.creditCardApplications = creditCardApplications;
 	}
 	
 //	public Set<CreditCardApplication> getCreditApplications() {

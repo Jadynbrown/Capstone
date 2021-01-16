@@ -46,10 +46,10 @@ public class CreditCardApplicationController {
 		}
 		return ResponseEntity.ok().body(ccApp);
 	}
-	//Adds the given creditcardapplication to the db
+	//Adds the given credit card application to the db
 	@PostMapping
-	public void addCreditCardApplications(@RequestBody CreditCardApplication ccApp) {
-		ccAppBo.addCreditCardApplication(ccApp);
+	public CreditCardApplication addCreditCardApplications(@RequestBody CreditCardApplication ccApp, @RequestParam int customerid) {
+		return ccAppBo.addCreditCardApplication(ccApp, customerid);
 	}
 	
 	//Updates a given creditCardApplication

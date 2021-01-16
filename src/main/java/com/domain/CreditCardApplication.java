@@ -46,18 +46,22 @@ public class CreditCardApplication {
 	@Column(name = "credit_Score")
 	int creditScore; 
 
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinTable(
+//			name = "customer_credit_card_application", 
+//			joinColumns = {@JoinColumn(name = "credit_Card_Application_Id",  insertable = false, updatable = false)}, 
+//			inverseJoinColumns = {@JoinColumn(name = "customer_Id",  insertable = false, updatable = false)})
+//	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "customer_credit_card_application", 
-			joinColumns = {@JoinColumn(name = "credit_Card_Application_Id",  insertable = false, updatable = false)}, 
-			inverseJoinColumns = {@JoinColumn(name = "customer_Id",  insertable = false, updatable = false)})
+	@JoinColumn(name = "customer_Id")
 	Customer customer; 
 
 	public CreditCardApplication() {
 		super();
 	}
 
-	public CreditCardApplication(char credit_Card_Application_Status, String creditCardApplicationDescription, Date applyDate,
+	public CreditCardApplication(Customer customer, char credit_Card_Application_Status, String creditCardApplicationDescription, Date applyDate,
 			Date approvalDate, Date rejectionDate, double requestedAmount, Users user) {
 		super();
 		this.creditCardApplicationStatus = credit_Card_Application_Status;
@@ -66,6 +70,7 @@ public class CreditCardApplication {
 		this.approvalDate = approvalDate;
 		this.requestedAmount = requestedAmount;
 		this.rejectionDate = rejectionDate; 
+		this.customer = customer; 
 	}
 
 	public char getCredit_Card_Application_Status() {
@@ -130,6 +135,14 @@ public class CreditCardApplication {
 
 	public char getCreditCardApplicationStatus() {
 		return creditCardApplicationStatus;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	
 	
