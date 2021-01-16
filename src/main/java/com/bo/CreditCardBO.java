@@ -36,15 +36,16 @@ public class CreditCardBO {
 		Customer c = customerBo.findById(customerId);
 		if(c != null) {
 			cc.setCustomer(c);
-			c.getCreditCards().add(cc);
-			customerBo.save(c);
+			creditCardRepo.save(cc);
 			return c;
 		}
 		return null; //Customer not found should be thrown
 	}
 	
-	public void deleteCreditCardById(int ccId) {
+	public Customer deleteCreditCardById(int ccId) {
+		Customer c = creditCardRepo.findById(ccId).get().getCustomer();
 		creditCardRepo.deleteById(ccId);
+		return c;
 	}
 	
 	//Currently my updates need to take in an entire object! No partial updates.

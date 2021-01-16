@@ -41,9 +41,11 @@ public class CreditCardController {
 	}
 	
 	
-	@DeleteMapping("/{id}") 
-	public void deleteCreditCardById(@PathVariable(value = "id")  int id) {
-		cbo.deleteCreditCardById(id);
+//	@DeleteMapping("/{id}") 
+//	public void deleteCreditCardById(@PathVariable(value = "id")  int id) {
+	@DeleteMapping 
+	public Customer deleteCreditCardById(@RequestParam int cardid) {
+		return cbo.deleteCreditCardById(cardid);
 	}
 	
 
