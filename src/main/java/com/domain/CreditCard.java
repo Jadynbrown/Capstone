@@ -67,15 +67,24 @@ public class CreditCard {
 		super();
 	}
 
-	public CreditCard(Customer customer, double limit, double balance, long cardNumber, int cvv, Date expirationDate, String status) {
+	public CreditCard(double limit, double balance, long cardNumber, int cvv, Date expirationDate, String status) {
 		this.limit = limit;
 		this.balance = balance;
 		this.cardNumber = cardNumber;
 		this.cvv = cvv;
 		this.expirationDate = expirationDate;
-		this.customer = customer;
+		//this.customer = customer;
 		this.status = status;
 	}
+//	public CreditCard(Customer customer, double limit, double balance, long cardNumber, int cvv, Date expirationDate, String status) {
+//		this.limit = limit;
+//		this.balance = balance;
+//		this.cardNumber = cardNumber;
+//		this.cvv = cvv;
+//		this.expirationDate = expirationDate;
+//		//this.customer = customer;
+//		this.status = status;
+//	}
 
 	public double getLimit() {
 		return limit;

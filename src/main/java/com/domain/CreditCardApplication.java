@@ -53,7 +53,7 @@ public class CreditCardApplication {
 //			inverseJoinColumns = {@JoinColumn(name = "customer_Id",  insertable = false, updatable = false)})
 //	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_Id")
 	Customer customer; 
 
@@ -144,6 +144,17 @@ public class CreditCardApplication {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	public void setCreditCardApplicationId(int creditCardApplicationId) {
+		this.creditCardApplicationId = creditCardApplicationId;
+	}
+
+	public void setId(int id) {
+		this.creditCardApplicationId = id; 
+		
+	}
+
+	
 	
 	
 }

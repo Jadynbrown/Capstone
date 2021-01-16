@@ -30,8 +30,6 @@ public class CreditCardApplicationController {
 	
 	@Autowired
 	CreditCardApplicationBO ccAppBo;
-	Customer c = new Customer(); 
-	
 	
 	@GetMapping
 	public List<CreditCardApplication> getCreditCardApplications(){
@@ -48,25 +46,26 @@ public class CreditCardApplicationController {
 	}
 	//Adds the given credit card application to the db
 	@PostMapping
-	public CreditCardApplication addCreditCardApplications(@RequestBody CreditCardApplication ccApp, @RequestParam int customerid) {
+	public Customer addCreditCardApplications(@RequestBody CreditCardApplication ccApp, @RequestParam int customerid) {
 		return ccAppBo.addCreditCardApplication(ccApp, customerid);
 	}
 	
-	//Updates a given creditCardApplication
-	//@PutMapping("/{id}")
-	@PutMapping
-	public void updateCreditCardApplication(@RequestBody CreditCardApplication ccApp) {
-		ccAppBo.updateCreditCardApplication(ccApp);
+	//Updates the creditcard application with the given id to match the given card
+	//throws NoSuchElementException
+	@PutMapping("/{id}")
+	public Customer updateCreditCardApplication(@RequestBody CreditCardApplication ccApp, @PathVariable int id) {
+		return ccAppBo.updateCreditCardApplication(ccApp, id);
 	}
 	
-	//
+	//throws NoSuchElementException
 	@DeleteMapping("/{id}")
-	public void deleteCreditCardApplicationById(@PathVariable int id) {
-		ccAppBo.deleteCreditCardApplicationById(id);
+	public Customer deleteCreditCardApplicationById(@PathVariable int id) {
+		return ccAppBo.deleteCreditCardApplicationById(id);
 	}
 	//#2, #4  		Still need error handling on this
 	@GetMapping(params = {"countby"})
 	public List<Object>  getCreditCardCount(@RequestParam String countby){
+		System.out.println(countby  + "count by ");
 		switch (countby.toLowerCase()) {
 			case "month": 
 				return ccAppBo.countApplicationsByMonth();

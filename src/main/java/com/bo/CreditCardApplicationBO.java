@@ -79,29 +79,33 @@ public class CreditCardApplicationBO {
 		return ccAppRepo.findById(id).orElse(null);
 	}
 	
-	public CreditCardApplication addCreditCardApplication(CreditCardApplication ccApp, int customerId) {
+	public Customer addCreditCardApplication(CreditCardApplication ccApp, int customerId) {
 		Customer customer = customerBo.findById(customerId);
 		if(customer != null) {
 			ccApp.setCustomer(customer);
-			customer.getCreditCardApplications().add(ccApp);
-			customerBo.save(customer);
-			return ccApp; 
+			ccAppRepo.save(ccApp);
+			return customer; 
 		}
 		return null; 
 	}
 	
-	public void deleteCreditCardApplicationById(int ccAppId) {
+	public Customer deleteCreditCardApplicationById(int ccAppId) {
+		Customer c = ccAppRepo.findById(ccAppId).get().getCustomer(); 
 		ccAppRepo.deleteById(ccAppId);
+		return c; 
 	}
 
 	//Currently my updates need to take in an entire object! No partial updates.
-	public CreditCardApplication updateCreditCardApplication(CreditCardApplication ccApp) {
-		Optional <CreditCardApplication> existingApp = ccAppRepo.findById(ccApp.getCreditCardApplicationId());
+	public Customer updateCreditCardApplication(CreditCardApplication ccApp, int appId) {
+		Optional <CreditCardApplication> existingApp = ccAppRepo.findById(appId);
 		if(existingApp.isPresent()) {
-			ccAppRepo.save(existingApp.get());
-			return ccApp;
+			Customer customer = existingApp.get().getCustomer(); 
+			ccApp.setId(appId);
+			ccApp.setCustomer(customer);
+			ccAppRepo.save(ccApp);
+			return customer;
 		}
-		return null; 
+		return null;  //throw error, cardapplication not found
 	}
 
 	
