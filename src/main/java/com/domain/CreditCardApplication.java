@@ -15,35 +15,39 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "credit_Card_Application")
+@Table(name = "credit_card_application")
 public class CreditCardApplication {
 	@Id
-	@Column(name = "credit_Card_Application_Id")
+	@Column(name = "credit_card_application_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int creditCardApplicationId; 
 	
-	@Column(name = "credit_Card_Application_Status")
+	@Column(name = "credit_card_application_status")
 	char creditCardApplicationStatus; 
 	
-	@Column(name = "credit_Card_Application_Description")
-	String creditCardApplicationDescription; 
+	@Column(name = "credit_card_rejected_description")
+	String creditCardRejectedDescription; 
 	
-	@Column(name = "credit_Card_Application_Apply_Date")
+	@Column(name = "credit_card_accepted_description")
+	String creditCardAcceptedReason;
+	
+	@Column(name = "credit_card_application_apply_date")
 	Date applyDate; 
 	
-	@Column(name = "credit_Card_Application_Approval_Date")
+	@Column(name = "credit_card_application_approval_date")
 	Date approvalDate;
 	
-	@Column(name = "credit_Card_Application_Rejection_Date")
+	@Column(name = "credit_card_application_rejection_date")
 	Date rejectionDate;
 	
-	@Column(name = "requested_Amount")
+	@Column(name = "requested_amount")
 	double requestedAmount; 
 		
-	@Column(name = "credit_Score")
+	@Column(name = "credit_score")
 	int creditScore; 
 
 //	@ManyToOne(fetch = FetchType.LAZY)
@@ -52,10 +56,10 @@ public class CreditCardApplication {
 //			joinColumns = {@JoinColumn(name = "credit_Card_Application_Id",  insertable = false, updatable = false)}, 
 //			inverseJoinColumns = {@JoinColumn(name = "customer_Id",  insertable = false, updatable = false)})
 //	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "customer_Id")
-	Customer customer; 
+	@JsonBackReference
+	@OneToOne(targetEntity = Customer.class, mappedBy = "creditCardApplication", fetch = FetchType.LAZY)
+	
+	private Customer customer;
 
 	public CreditCardApplication() {
 		super();
@@ -65,7 +69,7 @@ public class CreditCardApplication {
 			Date approvalDate, Date rejectionDate, double requestedAmount, Users user) {
 		super();
 		this.creditCardApplicationStatus = credit_Card_Application_Status;
-		this.creditCardApplicationDescription = creditCardApplicationDescription;
+		this.creditCardRejectedDescription = creditCardApplicationDescription;
 		this.applyDate = applyDate;
 		this.approvalDate = approvalDate;
 		this.requestedAmount = requestedAmount;
@@ -82,11 +86,11 @@ public class CreditCardApplication {
 	}
 
 	public String getCreditCardApplicationDescription() {
-		return creditCardApplicationDescription;
+		return creditCardRejectedDescription;
 	}
 
 	public void setCreditCardApplicationDescription(String creditCardApplicationDescription) {
-		this.creditCardApplicationDescription = creditCardApplicationDescription;
+		this.creditCardRejectedDescription = creditCardApplicationDescription;
 	}
 
 	public Date getApplyDate() {
@@ -152,6 +156,14 @@ public class CreditCardApplication {
 	public void setId(int id) {
 		this.creditCardApplicationId = id; 
 		
+	}
+
+	public void setCreditCardRejectedDescription(String creditCardRejectedDescription) {
+		this.creditCardRejectedDescription = creditCardRejectedDescription;
+	}
+
+	public void setCreditCardAcceptedReason(String creditCardAcceptedReason) {
+		this.creditCardAcceptedReason = creditCardAcceptedReason;
 	}
 
 	

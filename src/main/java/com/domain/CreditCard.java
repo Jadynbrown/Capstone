@@ -18,8 +18,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "credit_card")
@@ -56,10 +61,12 @@ public class CreditCard {
 //			inverseJoinColumns = {@JoinColumn (name = "customer_id", insertable = false, updatable = false)})
 	//Customer customer;
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "customer_Id")
-	Customer customer; 
+	@JsonManagedReference
+	@OneToOne(targetEntity = Customer.class,  fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
+	@LazyToOne(LazyToOneOption.PROXY)
+	    private Customer customer;
+
 	
 
 	

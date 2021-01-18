@@ -13,7 +13,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+
 
 @Entity
 @Table(name = "customer")
@@ -50,24 +62,18 @@ public class Customer {
 	
 	@Column
 	String name; 
+
+
 	
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinTable(
-//			name = "customer_credit_card_application",
-//			joinColumns = {@JoinColumn(name = "customer_Id")},
-//			inverseJoinColumns= {@JoinColumn (name = "credit_Card_Application_Id")})
-//	Set<CreditCardApplication> creditApplications;
-	@OneToMany(mappedBy = "customer" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	Set<CreditCardApplication> creditCardApplications; 
+	@JsonBackReference
+	@OneToOne(targetEntity = CreditCard.class, mappedBy = "customer", fetch = FetchType.LAZY)
 	
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinTable(
-//			name = "customer_credit_card",
-//			joinColumns = {@JoinColumn(name = "customer_Id")}, 
-//			inverseJoinColumns = {@JoinColumn(name = "credit_Card_Id")})
-	@OneToMany(mappedBy = "customer" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	Set<CreditCard> creditCards; 
-	
+	private CreditCard creditCard;
+
+	@JsonManagedReference
+	@OneToOne(targetEntity = CreditCardApplication.class,  fetch = FetchType.LAZY)
+	@LazyToOne(LazyToOneOption.PROXY)
+	    private CreditCardApplication creditCardApplication;
 	
 	
 	public int getMobile_Number() {
@@ -156,18 +162,7 @@ public class Customer {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<CreditCard> getCreditCards() {
-		return creditCards;
-	}
-	public void setCreditCards(Set<CreditCard> creditCards) {
-		this.creditCards = creditCards;
-	}
-	public Set<CreditCardApplication> getCreditCardApplications() {
-		return creditCardApplications;
-	}
-	public void setCreditCardApplications(Set<CreditCardApplication> creditCardApplications) {
-		this.creditCardApplications = creditCardApplications;
-	}
+
 	
 //	public Set<CreditCardApplication> getCreditApplications() {
 //		return creditApplications;

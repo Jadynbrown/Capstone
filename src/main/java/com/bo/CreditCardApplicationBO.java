@@ -11,7 +11,18 @@ import org.springframework.stereotype.Service;
 
 import com.domain.CreditCardApplication;
 import com.domain.Customer;
-import com.domain.WaitTimeResponse;
+import com.dto.IApprovedReason;
+import com.dto.IApproveReponseTime;
+import com.dto.IDateCount;
+import com.dto.IEmploymentCount;
+import com.dto.IGenderDemographic;
+import com.dto.IHouseholdDemographics;
+import com.dto.IMaritalDemographic;
+import com.dto.IPendingDetail;
+import com.dto.IRegionCount;
+import com.dto.IRegionSale;
+import com.dto.IRejectReponseTime;
+import com.dto.IRejectedReason;
 import com.dao.CreditCardApplicationRepository;
 
 
@@ -24,15 +35,15 @@ public class CreditCardApplicationBO {
 	@Autowired
 	CustomerBO customerBo; 
 	
-	public List<Object> countApplicationsByMonth(){
+	public List<IDateCount> countApplicationsByMonth(){
 		return ccAppRepo.countApplicationsByMonth();
 	}
 	
-	public List<Object> countApplicationsByYear(){
+	public List<IDateCount> countApplicationsByYear(){
 		return ccAppRepo.countApplicationsByYear();
 	}
 	
-	public List<Object> countApplicationsByDate(String date){
+	public List<IDateCount> countApplicationsByDate(String date){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-DD");
 		Date dateObj = null;
 		try {
@@ -43,31 +54,31 @@ public class CreditCardApplicationBO {
 		}
 		return null;
 	}
-	public List<CreditCardApplication> prospectDetails(){
+	public List<IPendingDetail> prospectDetails(){
 		return ccAppRepo.prospectDetails();
 	}
-	public List<CreditCardApplication> rejectedDetails(){
+	public List<IRejectedReason> rejectedDetails(){
 		return ccAppRepo.rejectedDetails();
 	}
 	
-	public List<CreditCardApplication> approvedDetails(){
+	public List<IApprovedReason> approvedDetails(){
 		return ccAppRepo.approvedDetails(); 		
 	}
 
 	
-	public List<WaitTimeResponse> averageTimeToApprove(){
+	public IApproveReponseTime averageTimeToApprove(){
 		return ccAppRepo.averageTimeToApprove();
 	}
 	
-	public List<WaitTimeResponse> averageTimeToReject(){
+	public IRejectReponseTime averageTimeToReject(){
 		return ccAppRepo.averageTimeToReject();
 	}
 	
-	public List<Object> countApprovedByRegion(){
+	public List<IRegionCount> countApprovedByRegion(){
 		return ccAppRepo.countApprovedByRegion(); 
 	}
 	
-	public List<Object> countApprovedByEmployment(){
+	public List<IEmploymentCount> countApprovedByEmployment(){
 		return ccAppRepo.countApprovedByEmployment(); 
 	}
 	
@@ -106,6 +117,22 @@ public class CreditCardApplicationBO {
 			return customer;
 		}
 		return null;  //throw error, cardapplication not found
+	}
+
+	public IMaritalDemographic maritalDemographics() {
+		return ccAppRepo.maritalDemographics();
+	}
+
+	public List<IHouseholdDemographics> householdSizeDemographics() {
+		return ccAppRepo.householdsizeDemographics();
+	}
+
+	public List<IGenderDemographic> genderDemographic() {
+		return ccAppRepo.genderDemographic(); 
+	}
+
+	public List<IRegionSale> regionalSales() {
+		return ccAppRepo.regionalSales();
 	}
 
 	

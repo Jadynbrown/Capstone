@@ -18,8 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.domain.CreditCardApplication;
 import com.domain.Customer;
-import com.domain.StatusDetails;
-import com.domain.WaitTimeResponse;
+import com.dto.IApproveReponseTime;
+import com.dto.IApprovedReason;
+import com.dto.IDateCount;
+import com.dto.IEmploymentCount;
+import com.dto.IGenderDemographic;
+import com.dto.IHouseholdDemographics;
+import com.dto.IMaritalDemographic;
+import com.dto.IPendingDetail;
+import com.dto.IRegionCount;
+import com.dto.IRegionSale;
+import com.dto.IRejectReponseTime;
+import com.dto.IRejectedReason;
 import com.bo.CreditCardApplicationBO;
 
 
@@ -63,52 +73,74 @@ public class CreditCardApplicationController {
 		return ccAppBo.deleteCreditCardApplicationById(id);
 	}
 	//#2, #4  		Still need error handling on this
-	@GetMapping(params = {"countby"})
-	public List<Object>  getCreditCardCount(@RequestParam String countby){
+	@GetMapping(params = "countby")
+	public List<IDateCount>  getCreditCardCount(@RequestParam String countby){
 		System.out.println(countby  + "count by ");
 		switch (countby.toLowerCase()) {
 			case "month": 
 				return ccAppBo.countApplicationsByMonth();
 			case "year": 
 				return ccAppBo.countApplicationsByYear();
-			case "employment":
-				return ccAppBo.countApprovedByEmployment();
-			case "region":
-				return ccAppBo.countApprovedByRegion();
 			default: //Specific date accepted - need error handling here
 				return ccAppBo.countApplicationsByDate(countby);
 		}
 	} 
 	
-	@GetMapping(params = "status")//#3, #5
-	public StatusDetails getApplicantStatuses(@RequestParam String status){
-		if(status.toLowerCase().equals("pending")) {
-			return new StatusDetails(ccAppBo.prospectDetails());
-		}
-		if(status.toLowerCase().equals("rejected")) {
-			return new StatusDetails(ccAppBo.rejectedDetails());
-		}
-		if(status.toLowerCase().equals("approved")) {
-			return new StatusDetails(ccAppBo.approvedDetails());
-		}
-		else
-			return null; 
+	@GetMapping("/approved/region")
+	public List<IRegionCount> getRegionCount() {
+		return ccAppBo.countApprovedByRegion();
+	}
+	@GetMapping("/approved/employment")
+	public List<IEmploymentCount> getEmploymentCount() {
+		return ccAppBo.countApprovedByEmployment();
 	}
 	
-	// need 9, 11, 12, 13, 14, 15, 16?
-	//#10
-	@GetMapping(params = "averageof")
-	public List<WaitTimeResponse>  getAverageTimeToApprove(@RequestParam String averageof){
-		if(averageof.toLowerCase().equals("approved")) {
-			return ccAppBo.averageTimeToApprove();
-		}else if (averageof.toLowerCase().equals("rejected")){
-			return ccAppBo.averageTimeToReject();
-		}else {
-			//throw error
-			return null; 
-		}
-		
+	@GetMapping("/approved/details")
+	public List<IApprovedReason> getApprovedReasons() {
+		return ccAppBo.approvedDetails();
 	}
-
+	@GetMapping("/rejected/details")// #3, 5
+	public List<IRejectedReason> getRejectedReasons() {
+		return ccAppBo.rejectedDetails();
+	}
+	@GetMapping("/pending/details") //This is returning the application ID out of order compared to approved/rejected
+	public List<IPendingDetail> getPendingStatus() {
+		return ccAppBo.prospectDetails();
+	}
+	
+	
+	//#10 
+	@GetMapping("/averageresponsetime/reject") //This is returning the application ID out of order compared to approved/rejected
+	public IRejectReponseTime getAverageTimeToReject() {
+		return ccAppBo.averageTimeToReject();
+	}
+	@GetMapping("/averageresponsetime/approve")
+	public IApproveReponseTime getAverageTimeToApprove() {
+		return ccAppBo.averageTimeToApprove();
+	}
+	
+	//#14: Region wise sale of credit card
+	@GetMapping("/regionalsales")
+	public List<IRegionSale> getRegionalSales() {
+		return ccAppBo.regionalSales();
+	}
+	
+	//#15 : Customer demographics
+	@GetMapping("/demographics/maritalstatus")
+	public IMaritalDemographic maritalDemographics() {
+		return ccAppBo.maritalDemographics();
+	}
+	@GetMapping("/demographics/householdsize")
+	public List<IHouseholdDemographics> householdSizeDemographics() {
+		return ccAppBo.householdSizeDemographics();
+	}	
+	@GetMapping("/demographics/gender")
+	public List<IGenderDemographic> genderDemographic() {
+		return ccAppBo.genderDemographic();
+	}
+//	@GetMapping("/demographics/income")
+//	public IApproveReponseTime getAverageTimeToApprove() {
+//		return ccAppBo.averageTimeToApprove();
+//	}
 
 }
