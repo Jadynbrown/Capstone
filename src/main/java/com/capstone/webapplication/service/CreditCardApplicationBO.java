@@ -80,6 +80,7 @@ public class CreditCardApplicationBO {
 	public CreditCardApplication getCreditCardApplicationById(Integer id) {
 		return ccAppRepo.findById(id).orElse(null);
 	}
+	//return ccAppRepo.findById(id).orElseThrow(new ResourceNotFoundException("User not found with id: " + id));custom e
 	
 	public Customer addCreditCardApplication(CreditCardApplication ccApp, Integer customerId) {
 		Customer customer = customerService.findById(customerId);
