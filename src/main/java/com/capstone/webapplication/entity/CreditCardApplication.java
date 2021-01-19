@@ -32,6 +32,9 @@ public class CreditCardApplication {
 	@Column(name = "credit_card_rejected_description")
 	String creditCardRejectedDescription; 
 	
+	@Column(name = "credit_card_pending_description")
+	String creditCardPendingDescription;
+	
 	@Column(name = "credit_card_accepted_description")
 	String creditCardAcceptedReason;
 	
@@ -86,6 +89,22 @@ public class CreditCardApplication {
 
 	public void setCreditCardApplicationDescription(String creditCardApplicationDescription) {
 		this.creditCardRejectedDescription = creditCardApplicationDescription;
+	}
+
+	public String getCreditCardPendingDescription() {
+		return creditCardPendingDescription;
+	}
+
+	public void setCreditCardPendingDescription(String creditCardPendingDescription) {
+		this.creditCardPendingDescription = creditCardPendingDescription;
+	}
+
+	public String getCreditCardRejectedDescription() {
+		return creditCardRejectedDescription;
+	}
+
+	public String getCreditCardAcceptedReason() {
+		return creditCardAcceptedReason;
 	}
 
 	public Date getApplyDate() {

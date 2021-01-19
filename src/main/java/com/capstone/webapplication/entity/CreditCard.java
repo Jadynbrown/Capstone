@@ -64,9 +64,7 @@ public class CreditCard {
 	
 	@Column(name = "discontinuedReason")
 	private String discontinuedReason;
-	
-
-	
+		
 	
 	@JsonManagedReference
 	@OneToOne(targetEntity = Customer.class )

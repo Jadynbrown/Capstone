@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capstone.webapplication.dto.INameLimit;
+import com.capstone.webapplication.dto.IGenderDemographic;
+import com.capstone.webapplication.dto.IHouseholdDemographics;
+import com.capstone.webapplication.dto.IMaritalDemographic;
 import com.capstone.webapplication.dto.INameCcIdClassification;
 import com.capstone.webapplication.dto.INameSpendingClassification;
+import com.capstone.webapplication.dto.IRegionSale;
 import com.capstone.webapplication.dto.ITypeCost;
 import com.capstone.webapplication.entity.CreditCard;
 import com.capstone.webapplication.entity.Customer;
@@ -75,6 +79,21 @@ public Customer findById(Integer id) {
 		return "customer removed";
 	}
 	
+	public IMaritalDemographic maritalDemographics() {
+		return customerRepository.maritalDemographics();
+	}
+
+	public List<IHouseholdDemographics> householdSizeDemographics() {
+		return customerRepository.householdsizeDemographics();
+	}
+
+	public List<IGenderDemographic> genderDemographic() {
+		return customerRepository.genderDemographic(); 
+	}
+
+	public List<IRegionSale> regionalSales() {
+		return customerRepository.regionalSales();
+	}
 	
 
 

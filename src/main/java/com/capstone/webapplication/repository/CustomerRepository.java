@@ -8,8 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.capstone.webapplication.dto.INameLimit;
+import com.capstone.webapplication.dto.IGenderDemographic;
+import com.capstone.webapplication.dto.IHouseholdDemographics;
+import com.capstone.webapplication.dto.IMaritalDemographic;
 import com.capstone.webapplication.dto.INameCcIdClassification;
 import com.capstone.webapplication.dto.INameSpendingClassification;
+import com.capstone.webapplication.dto.IRegionSale;
 import com.capstone.webapplication.entity.CreditCard;
 import com.capstone.webapplication.entity.Customer;
 import com.capstone.webapplication.entity.Transaction;
@@ -49,7 +53,17 @@ public interface CustomerRepository  extends JpaRepository<Customer, Integer>{
 			"GROUP BY t.credit_card_credit_card_id",nativeQuery = true)
 	public List<INameSpendingClassification> findClassificationBySpending();
 
-
+	@Query(value = "SELECT SUM(IF(marital_status = 'M', 1, 0)) AS countOfMarried, SUM(IF(marital_status = 'S', 1, 0)) AS countOfSingle FROM customers; ", nativeQuery = true)
+	IMaritalDemographic maritalDemographics();
+	
+	@Query(value = "select count(*) as countOfSize, household_size as householdSize from customers group by household_size ", nativeQuery = true)
+	List<IHouseholdDemographics> householdsizeDemographics();
+	
+	@Query(value = "select count(*) as numberOfCustomers, gender as gender from customers group by gender", nativeQuery = true)
+	List<IGenderDemographic> genderDemographic();
+	
+	@Query(value = "select count(*) as numberOfCustomers, region as region from customers group by region", nativeQuery = true)
+	List<IRegionSale> regionalSales();
 	
 	
 }	

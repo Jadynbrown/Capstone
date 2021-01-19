@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 public interface IRejectedReason {
-	Integer getCCApplicationId();
+	Integer getApplicationId();
 	String getRejectedReason();
 	
 }

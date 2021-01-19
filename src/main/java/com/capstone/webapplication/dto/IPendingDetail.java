@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 
 public interface IPendingDetail {
-	Integer getCCApplicationId();
+	Integer getApplicationId();
 	String getPendingStatus();
 	
 }

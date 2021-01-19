@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 
 public interface IApprovedReason {
-	Integer getCCApplicationId();
+	Integer getApplicationId();
 	String getApprovedReason();
 	
 }

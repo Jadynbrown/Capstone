@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.webapplication.dto.INameLimit;
+import com.capstone.webapplication.dto.IGenderDemographic;
+import com.capstone.webapplication.dto.IHouseholdDemographics;
+import com.capstone.webapplication.dto.IMaritalDemographic;
 import com.capstone.webapplication.dto.INameCcIdClassification;
 import com.capstone.webapplication.dto.INameSpendingClassification;
 import com.capstone.webapplication.entity.CreditCard;
@@ -78,5 +81,18 @@ public class CustomerController {
 	public String deleteCustomer(@PathVariable Integer id) {
 		return customerService.deleteCustomer(id);
 	}
-
+	
+		//#15 : Customer demographics
+		@GetMapping("/demographics/maritalstatus")
+		public IMaritalDemographic maritalDemographics() {
+			return customerService.maritalDemographics();
+		}
+		@GetMapping("/demographics/householdsize")
+		public List<IHouseholdDemographics> householdSizeDemographics() {
+			return customerService.householdSizeDemographics();
+		}	
+		@GetMapping("/demographics/gender")
+		public List<IGenderDemographic> genderDemographic() {
+			return customerService.genderDemographic();
+		}
 }

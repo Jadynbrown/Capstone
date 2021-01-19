@@ -17,7 +17,7 @@ import com.capstone.webapplication.entity.Customer;
 
 
 @Service
-public class CreditCardApplicationBO {
+public class CreditCardApplicationService {
 	@Autowired
 	CreditCardApplicationRepository ccAppRepo; 
 	
@@ -109,18 +109,6 @@ public class CreditCardApplicationBO {
 			return customer;
 		}
 		return null;  //throw error, cardapplication not found
-	}
-
-	public IMaritalDemographic maritalDemographics() {
-		return ccAppRepo.maritalDemographics();
-	}
-
-	public List<IHouseholdDemographics> householdSizeDemographics() {
-		return ccAppRepo.householdsizeDemographics();
-	}
-
-	public List<IGenderDemographic> genderDemographic() {
-		return ccAppRepo.genderDemographic(); 
 	}
 
 	public List<IRegionSale> regionalSales() {

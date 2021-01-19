@@ -63,13 +63,16 @@ public class Customer {
 	@JsonManagedReference
 	@OneToOne(targetEntity = CreditCardApplication.class,  fetch = FetchType.LAZY)
 	@LazyToOne(LazyToOneOption.PROXY)
-	    private CreditCardApplication creditCardApplication;
+	private CreditCardApplication creditCardApplication;
 
+	@JsonManagedReference
+	@OneToOne(targetEntity = LoanApplication.class,  fetch = FetchType.LAZY)
+	@LazyToOne(LazyToOneOption.PROXY)
+	private LoanApplication loanApplication;
 
 	@JsonBackReference
 	@OneToOne(targetEntity = CreditCard.class, mappedBy = "customer", fetch = FetchType.LAZY)
-	
-	     private CreditCard creditCard; 
+	private CreditCard creditCard; 
 	
 	
 	

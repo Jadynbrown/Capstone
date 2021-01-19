@@ -16,102 +16,96 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.capstone.webapplication.dto.*;
-import com.capstone.webapplication.entity.CreditCardApplication;
+import com.capstone.webapplication.entity.LoanApplication;
 import com.capstone.webapplication.entity.Customer;
-import com.capstone.webapplication.service.CreditCardApplicationService;
+import com.capstone.webapplication.service.LoanApplicationService;
+import com.capstone.webapplication.service.LoanApplicationService;
 
 
 @RestController
-@RequestMapping("/cardapplications")
-public class CreditCardApplicationController {
+@RequestMapping("/loanapplications")
+public class LoanApplicationController {
 	
 	@Autowired
-	CreditCardApplicationService ccAppBo;
+	LoanApplicationService loanAppBo;
 	
 	@GetMapping
-	public List<CreditCardApplication> getCreditCardApplications(){
-		return ccAppBo.getCreditCardApplications(); 
+	public List<LoanApplication> getLoanApplications(){
+		return loanAppBo.getLoanApplications(); 
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<CreditCardApplication> getCreditCardApplicationById(@PathVariable(value = "id") Integer id){
-		CreditCardApplication ccApp = ccAppBo.getCreditCardApplicationById(id);
-		if(ccApp == null) {
+	public ResponseEntity<LoanApplication> getLoanApplicationById(@PathVariable(value = "id") Integer id){
+		LoanApplication loanApp = loanAppBo.getLoanApplicationById(id);
+		if(loanApp == null) {
 			return ResponseEntity.notFound().build(); 
 		}
-		return ResponseEntity.ok().body(ccApp);
+		return ResponseEntity.ok().body(loanApp);
 	}
-	//Adds the given credit card application to the db
+	//Adds the given Loan application to the db
 	@PostMapping
-	public Customer addCreditCardApplications(@RequestBody CreditCardApplication ccApp, @RequestParam int customerid) {
-		return ccAppBo.addCreditCardApplication(ccApp, customerid);
+	public Customer addLoanApplications(@RequestBody LoanApplication loanApp, @RequestParam int customerid) {
+		return loanAppBo.addLoanApplication(loanApp, customerid);
 	}
 	
-	//Updates the creditcard application with the given id to match the given card
+	//Updates the loan application with the given id to match the given card
 	//throws NoSuchElementException
 	@PutMapping("/{id}")
-	public Customer updateCreditCardApplication(@RequestBody CreditCardApplication ccApp, @PathVariable int id) {
-		return ccAppBo.updateCreditCardApplication(ccApp, id);
+	public Customer updateLoanApplication(@RequestBody LoanApplication loanApp, @PathVariable int id) {
+		return loanAppBo.updateLoanApplication(loanApp, id);
 	}
 	
 	//throws NoSuchElementException
 	@DeleteMapping("/{id}")
-	public Customer deleteCreditCardApplicationById(@PathVariable int id) {
-		return ccAppBo.deleteCreditCardApplicationById(id);
+	public Customer deleteLoanApplicationById(@PathVariable int id) {
+		return loanAppBo.deleteLoanApplicationById(id);
 	}
 	//#2, #4  		Still need error handling on this
 	@GetMapping(params = "countby")
-	public List<IDateCount>  getCreditCardCount(@RequestParam String countby){
+	public List<IDateCount>  getLoanCardCount(@RequestParam String countby){
 		System.out.println(countby  + "count by ");
 		switch (countby.toLowerCase()) {
 			case "month": 
-				return ccAppBo.countApplicationsByMonth();
+				return loanAppBo.countApplicationsByMonth();
 			case "year": 
-				return ccAppBo.countApplicationsByYear();
+				return loanAppBo.countApplicationsByYear();
 			default: //Specific date accepted - need error handling here
-				return ccAppBo.countApplicationsByDate(countby);
+				return loanAppBo.countApplicationsByDate(countby);
 		}
 	} 
 	
 	@GetMapping("/approved/region")
 	public List<IRegionCount> getRegionCount() {
-		return ccAppBo.countApprovedByRegion();
+		return loanAppBo.countApprovedByRegion();
 	}
 	@GetMapping("/approved/employment")
 	public List<IEmploymentCount> getEmploymentCount() {
-		return ccAppBo.countApprovedByEmployment();
+		return loanAppBo.countApprovedByEmployment();
 	}
 	
 	@GetMapping("/approved/details")
 	public List<IApprovedReason> getApprovedReasons() {
-		return ccAppBo.approvedDetails();
+		return loanAppBo.approvedDetails();
 	}
 	@GetMapping("/rejected/details")// #3, 5
 	public List<IRejectedReason> getRejectedReasons() {
-		return ccAppBo.rejectedDetails();
+		return loanAppBo.rejectedDetails();
 	}
-	@GetMapping("/pending/details") //This is returning the application ID out of order compared to approved/rejected
+	@GetMapping("/pending/details")
 	public List<IPendingDetail> getPendingStatus() {
-		return ccAppBo.prospectDetails();
+		return loanAppBo.prospectDetails();
 	}
 	
 	
 	//#10 
 	@GetMapping("/averageresponsetime/reject") //This is returning the application ID out of order compared to approved/rejected
 	public IRejectReponseTime getAverageTimeToReject() {
-		return ccAppBo.averageTimeToReject();
+		return loanAppBo.averageTimeToReject();
 	}
 	@GetMapping("/averageresponsetime/approve")
 	public IApproveReponseTime getAverageTimeToApprove() {
-		return ccAppBo.averageTimeToApprove();
+		return loanAppBo.averageTimeToApprove();
 	}
-	
-	//#14: Region wise sale of credit card
-	@GetMapping("/regionalsales")
-	public List<IRegionSale> getRegionalSales() {
-		return ccAppBo.regionalSales();
-	}
-	
-
+		
 
 }

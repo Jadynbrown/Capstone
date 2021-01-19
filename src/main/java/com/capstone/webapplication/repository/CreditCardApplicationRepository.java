@@ -30,7 +30,7 @@ public interface CreditCardApplicationRepository extends JpaRepository<CreditCar
 	List<IDateCount>  countApplicationsByYear(); 
 
 	//3. Status of all cc prospects
-	@Query(value = "select credit_card_application_id as cCApplicationId, credit_card_pending_description as pendingStatus from credit_card_application where credit_card_application_status = 'P'", nativeQuery = true)
+	@Query(value = "select credit_card_application_id as applicationId, credit_card_pending_description as pendingStatus from credit_card_application where credit_card_application_status = 'P'", nativeQuery = true)
 	List<IPendingDetail> prospectDetails(); 
 	
 	//4. No of credit cards approved, region wise / profession wise
@@ -39,13 +39,13 @@ public interface CreditCardApplicationRepository extends JpaRepository<CreditCar
 	List<IRegionCount> countApprovedByRegion();
 	
 	@Query(value = "select cu.employment as employment, count(*) as countOFApplication from customers cu inner join credit_card_application cca "
-			+ "on cu.credit_card_application_credit_card_application_id = cca.credit_card_application_id GROUP BY cu.employment", nativeQuery = true)
+			+ "on cu.credit_card_application_credit_card_application_id = cca.credit_card_application_id WHERE credit_card_application_status = 'A' GROUP BY cu.employment", nativeQuery = true)
 	List<IEmploymentCount> countApprovedByEmployment(); 
 	
 	//4, 5 Status details
-	@Query(value = "SELECT credit_card_application_id as cCApplicationId, credit_card_rejected_description as rejectedReason FROM credit_card_application where credit_card_application_status = 'R'", nativeQuery = true)
+	@Query(value = "SELECT credit_card_application_id as applicationId, credit_card_rejected_description as rejectedReason FROM credit_card_application where credit_card_application_status = 'R'", nativeQuery = true)
 	List<IRejectedReason> rejectedDetails(); 
-	@Query(value = "select credit_card_application_id as cCApplicationId, credit_card_accepted_description as approvedReason from credit_card_application where credit_card_application_status = 'A'", nativeQuery = true)
+	@Query(value = "select credit_card_application_id as applicationId, credit_card_accepted_description as approvedReason from credit_card_application where credit_card_application_status = 'A'", nativeQuery = true)
 	List<IApprovedReason> approvedDetails(); 
 
 	//10
@@ -55,18 +55,8 @@ public interface CreditCardApplicationRepository extends JpaRepository<CreditCar
 	IRejectReponseTime averageTimeToReject();
 	
 	
-	//15
-	@Query(value = "SELECT SUM(IF(marital_status = 'M', 1, 0)) AS countOfMarried, SUM(IF(marital_status = 'S', 1, 0)) AS countOfSingle FROM customers; ", nativeQuery = true)
-	IMaritalDemographic maritalDemographics();
-	
-	@Query(value = "select count(*) as countOfSize, household_size as householdSize from customers group by household_size ", nativeQuery = true)
-	List<IHouseholdDemographics> householdsizeDemographics();
-	
-	@Query(value = "select count(*) as numberOfCustomers, gender as gender from customers group by gender", nativeQuery = true)
-	List<IGenderDemographic> genderDemographic();
-	
 	@Query(value = "select count(*) as numberOfCustomers, region as region from customers group by region", nativeQuery = true)
-	List<IRegionSale> regionalSales();
+	List<IRegionSale> regionalSales();//Edit to actually query only customers with credit cards????
 	
 	
 	
