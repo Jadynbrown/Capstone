@@ -23,7 +23,7 @@ public interface CreditCardApplicationRepository extends JpaRepository<CreditCar
 	
 	//2. Count of credit cards by day, month, year
 	@Query(value = " SELECT credit_card_application_apply_date as applicationDate, count(*) as countOfApplication FROM credit_card_application  WHERE (credit_card_application_apply_date) = ?1", nativeQuery = true)
-	List<IDateCount> countApplicationsByDate(String date); 
+	List<IDateCount> countApplicationsByDate(String countBy); 
 	@Query(value = "select monthname(credit_card_application_apply_date)  as applicationDate , count( * ) as countOfApplication FROM credit_card_application GROUP BY month(credit_card_application_apply_date)", nativeQuery = true)
 	List<IDateCount> countApplicationsByMonth(); 
 	@Query(value = "select year(credit_card_application_apply_date)  as applicationDate , count( * ) as countOfApplication FROM credit_card_application GROUP BY YEAR(credit_card_application_apply_date)", nativeQuery = true)

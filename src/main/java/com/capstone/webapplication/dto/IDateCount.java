@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 public interface IDateCount {
 	
-	Date getApplicationDate();
+	String getApplicationDate();
 	Integer getCountOfApplication();
 	
 	
