@@ -59,9 +59,10 @@ public class CustomerController {
 
 	@GetMapping("/customer")
 	@ResponseBody
-	public ResponseEntity<List<Customer>> findAllCustomers() {
+	public List<Customer> findAllCustomers() {
 		System.out.println(customerService.getCustomers());
-		return ResponseEntity.ok(customerService.getCustomers());
+		return customerService.getCustomers();
+		//return ResponseEntity.ok(customerService.getCustomers());
 	}
 	
 	@GetMapping("/customer/{customer_Id}/creditCard")

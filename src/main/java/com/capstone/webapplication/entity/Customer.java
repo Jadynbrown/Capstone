@@ -74,12 +74,9 @@ public class Customer {
 	@OneToOne(targetEntity = LoanApplication.class)	
 	private LoanApplication loanApplication;
 
-//	@JsonBackReference
-//	@OneToOne(targetEntity = CreditCard.class, mappedBy = "customer", fetch = FetchType.LAZY)
-//	private CreditCard creditCard; 
 	
 	@JsonBackReference
-	@OneToOne(targetEntity = CreditCard.class,  mappedBy = "customer")
+	@OneToOne(targetEntity = CreditCard.class, mappedBy = "customer")
 	private CreditCard creditCard; 
 
 	

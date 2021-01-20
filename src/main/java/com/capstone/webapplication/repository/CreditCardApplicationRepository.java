@@ -19,7 +19,6 @@ import com.capstone.webapplication.entity.CreditCardApplication;
 @Repository
 public interface CreditCardApplicationRepository extends JpaRepository<CreditCardApplication, Integer>{
 	
-	//if there is time these need to be changed to jpql queries
 	
 	//2. Count of credit cards by day, month, year
 	@Query(value = " SELECT credit_card_application_apply_date as applicationDate, count(*) as countOfApplication FROM credit_card_application  WHERE (credit_card_application_apply_date) = ?1", nativeQuery = true)
