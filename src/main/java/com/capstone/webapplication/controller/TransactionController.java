@@ -30,43 +30,43 @@ public class TransactionController {
 	@Autowired
 	private CreditCardService creditCardService; 
 	
-	@GetMapping("/creditCards/{creditCardId}/transactions")
+	@GetMapping("/creditcards/{creditCardId}/transactions")
 	public ResponseEntity<List<Transaction>> getTransactions(@PathVariable Integer creditCardId){
 		return ResponseEntity.ok(transactionData.getTransactions(creditCardId));
 	}
 	
-	@GetMapping("/creditCards/{creditCardId}/transactions/cost/{transactionType}")
+	@GetMapping("/creditcards/{creditCardId}/transactions/cost/{transactionType}")
 	public ITypeCost getCostByTransaction(@PathVariable("creditCardId") Integer creditCardId, @PathVariable("transactionType") String transactionType) 
 	{
 		return transactionData.getCostByTransaction(creditCardId, transactionType);
 	}
 	
-	@GetMapping("/creditCards/{creditCardId}/transactions/region/{transactionState}")
+	@GetMapping("/creditcards/{creditCardId}/transactions/region/{transactionState}")
 	public List<Transaction> getTransactionByState(@PathVariable("creditCardId") Integer creditCardId, @PathVariable("transactionState") String transactionState) 
 	{
 		return transactionData.getTransactionByState(creditCardId, transactionState);
 	}
 	
-	@GetMapping("/creditCards/{creditCardId}/transactions/region")
+	@GetMapping("/creditcards/{creditCardId}/transactions/region")
 	public List<IStateCost> getAllTransactionByRegion(@PathVariable("creditCardId") Integer creditCardId) 
 	{
 		return transactionData.getAllTransactionByRegion(creditCardId);
 	}
 	
 	//Url for credit card statement - requirement6
-	@GetMapping("/creditCards/{creditCardId}/transactions/{month}/{year}")
+	@GetMapping("/creditcards/{creditCardId}/transactions/{month}/{year}")
 	public List<Transaction> getStatementByDate(@PathVariable Integer creditCardId, @PathVariable Integer month, @PathVariable Integer year ) 
 	{
 		return transactionData.getStatementByDate(creditCardId, month,year);
 	}
 	
-	@GetMapping("/creditCards/{creditCardId}/transactions/{transactionId}")
+	@GetMapping("/creditcards/{creditCardId}/transactions/{transactionId}")
 	public Transaction getTransaction(@PathVariable Integer transactionId)
 	{
 		return transactionData.getTransaction(transactionId);
 	}
 	
-	@PostMapping( "/creditCards/{creditCardId}/transactions")
+	@PostMapping( "/creditcards/{creditCardId}/transactions")
 	public Transaction addCreditCard(@RequestBody Transaction transaction, @PathVariable Integer creditCardId)
 	{  
 		transaction.setCreditCard(new CreditCard(creditCardId));

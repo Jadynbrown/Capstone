@@ -35,15 +35,16 @@ public class CreditCardApplicationService {
 	}
 	
 	public List<IDateCount> countApplicationsByDate(String date){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-DD");
-		Date dateObj = null;
-		try {
-			dateObj = sdf.parse(date);
-			return ccAppRepo.countApplicationsByDate(dateObj);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
+////		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-DD");
+////		Date dateObj = null;
+//		try {
+////			dateObj = sdf.parse(date);
+//			return ccAppRepo.countApplicationsByDate(date);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+		return ccAppRepo.countApplicationsByDate(date);
 	}
 	public List<IPendingDetail> prospectDetails(){
 		return ccAppRepo.prospectDetails();

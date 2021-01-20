@@ -45,6 +45,10 @@ public class Payment {
 	@Column(name = "payment_date")
 	private Date paymentDate;
 	
+	@JsonBackReference
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private CreditCard creditCard;
+	
 	public Integer getPaymentId() {
 		return paymentId;
 	}
@@ -83,9 +87,7 @@ public class Payment {
 	public void setCreditCard(CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
-	@JsonBackReference
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	private CreditCard creditCard;
+	
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}

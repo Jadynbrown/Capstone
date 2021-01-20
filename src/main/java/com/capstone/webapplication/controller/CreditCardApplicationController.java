@@ -69,7 +69,8 @@ public class CreditCardApplicationController {
 			case "year": 
 				return ccAppBo.countApplicationsByYear();
 			default: //Specific date accepted - need error handling here
-				return ccAppBo.countApplicationsByDate(countby);
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-DD");
+				return ccAppBo.countApplicationsByDate((countby));
 		}
 	} 
 	
@@ -94,8 +95,7 @@ public class CreditCardApplicationController {
 	public List<IPendingDetail> getPendingStatus() {
 		return ccAppBo.prospectDetails();
 	}
-	
-	
+		
 	//#10 
 	@GetMapping("/averageresponsetime/reject") //This is returning the application ID out of order compared to approved/rejected
 	public IRejectReponseTime getAverageTimeToReject() {

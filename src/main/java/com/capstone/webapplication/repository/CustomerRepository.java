@@ -47,7 +47,7 @@ public interface CustomerRepository  extends JpaRepository<Customer, Integer>{
 	@Query(value= "select cu.name as customerName, cc.credit_card_id as creditCardId , SUM(t.cost) as totalSpending ,\r\n" + 
 			"CASE WHEN SUM(t.cost) >= 5000 THEN \"High Value Customer\"\r\n" + 
 			"WHEN SUM(t.cost) <5000 AND SUM(t.cost) >=2500 THEN \"Medicore Customer\"\r\n" + 
-			"WHEN SUM(t.cost) < 2500 THEN \"Low Value Customer\" END AS customerClassification\r\n" + 
+			"WHEN SUM(t.cost) >0 AND SUM(t.cost) < 2500 THEN \"Low Value Customer\" END AS customerClassification\r\n" + 
 			"FROM transaction_tbl t inner join credit_card cc on cc.credit_card_id = t.credit_card_credit_card_id \r\n" + 
 			"join customers cu on cu.customer_id = cc.customer_customer_id WHERE transaction_date >= date_sub(now(), interval 6 month)\r\n" + 
 			"GROUP BY t.credit_card_credit_card_id",nativeQuery = true)

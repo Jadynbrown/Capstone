@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "credit_card_application")
@@ -24,7 +25,7 @@ public class CreditCardApplication {
 	@Id
 	@Column(name = "credit_card_application_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int creditCardApplicationId; 
+	Integer creditCardApplicationId; 
 	
 	@Column(name = "credit_card_application_status")
 	char creditCardApplicationStatus; 
@@ -55,9 +56,14 @@ public class CreditCardApplication {
 
 
 	@JsonBackReference
-	@OneToOne(targetEntity = Customer.class, mappedBy = "creditCardApplication", fetch = FetchType.LAZY)
+	@OneToOne(targetEntity = Customer.class, mappedBy = "creditCardApplication")
 	
 	private Customer customer;
+
+	public CreditCardApplication(Integer creditCardApplicationId) {
+		super();
+		this.creditCardApplicationId = creditCardApplicationId;
+	}
 
 	public CreditCardApplication() {
 		super();

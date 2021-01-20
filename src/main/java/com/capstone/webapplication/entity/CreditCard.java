@@ -26,6 +26,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -66,28 +67,29 @@ public class CreditCard {
 	private String discontinuedReason;
 		
 	
-	@JsonManagedReference
-	@OneToOne(targetEntity = Customer.class )
-	
-	    private Customer customer;
-	
 
+	@OneToOne(targetEntity = Customer.class )
+	private Customer customer;
+//	
+//
 	@JsonManagedReference
+	@JsonIgnore
 	@OneToMany( orphanRemoval = true, mappedBy = "creditCard" )
 	 public List<Transaction> transactions;
 	
 	@JsonManagedReference
+	@JsonIgnore
 	@OneToMany( orphanRemoval = true,mappedBy = "creditCard")
 	 public List<Payment> payments;
 	
 
 	
 
-	
-	public void addTransaction(Transaction transaction) {
-        transactions.add(transaction);
-        transaction.setCreditCard(this);
-    }
+//	
+//	public void addTransaction(Transaction transaction) {
+//        transactions.add(transaction);
+//        transaction.setCreditCard(this);
+//    }
  
     
 
@@ -95,6 +97,42 @@ public class CreditCard {
 		super();
 		this.creditCardId = creditCardId;
 	}
+
+
+
+//	public Customer getCustomer() {
+//		return customer;
+//	}
+//
+//
+//
+//	public void setCustomer(Customer customer) {
+//		this.customer = customer;
+//	}
+//
+//
+//
+//	public List<Transaction> getTransactions() {
+//		return transactions;
+//	}
+//
+//
+//
+//	public void setTransactions(List<Transaction> transactions) {
+//		this.transactions = transactions;
+//	}
+//
+//
+//
+//	public List<Payment> getPayments() {
+//		return payments;
+//	}
+//
+//
+//
+//	public void setPayments(List<Payment> payments) {
+//		this.payments = payments;
+//	}
 
 
 

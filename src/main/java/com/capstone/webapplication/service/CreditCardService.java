@@ -34,8 +34,8 @@ public class CreditCardService {
 		return repository.findAll();
 	}
 	
-	public  CreditCard getCreditCardById(Integer id) {
-		return repository.findById(id).orElse(null);
+	public  CreditCard getCreditCardById(Integer creditCardId) {
+		return repository.findById(creditCardId).orElse(null);
 	}
 
 	

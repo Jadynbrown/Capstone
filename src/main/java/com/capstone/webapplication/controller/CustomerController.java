@@ -2,7 +2,10 @@ package com.capstone.webapplication.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,9 +24,13 @@ import com.capstone.webapplication.dto.IMaritalDemographic;
 import com.capstone.webapplication.dto.INameCcIdClassification;
 import com.capstone.webapplication.dto.INameSpendingClassification;
 import com.capstone.webapplication.entity.CreditCard;
+import com.capstone.webapplication.entity.CreditCardApplication;
 import com.capstone.webapplication.entity.Customer;
 import com.capstone.webapplication.entity.Transaction;
+import com.capstone.webapplication.exception.CustomerAlreadyExsistsException;
 import com.capstone.webapplication.service.CustomerService;
+
+
 
 @RestController
 public class CustomerController {
@@ -31,10 +38,22 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
-	@PostMapping("/customer")
-	public Customer addCustomer(@RequestBody Customer customer) {
-		return customerService.saveCustomer(customer);
+	@PostMapping("cardapplications/{creditCardApplicationId}/customer")
+	public Customer addCustomer(@Valid @RequestBody Customer customer, @PathVariable Integer creditCardApplicationId) throws CustomerAlreadyExsistsException {
+		try {
+		
+		customerService.saveCustomer(customer);
+		customer.setCreditCardApplication(new CreditCardApplication(creditCardApplicationId));
+		}
+		catch (Exception e) {
+			if(e instanceof DataIntegrityViolationException) {
+				throw new CustomerAlreadyExsistsException(e);
+			}
+			throw e;
+		}
+		return customer;
 	}
+
 
 	
 
@@ -83,15 +102,15 @@ public class CustomerController {
 	}
 	
 		//#15 : Customer demographics
-		@GetMapping("/demographics/maritalstatus")
+		@GetMapping("/customer/demographics/maritalstatus")
 		public IMaritalDemographic maritalDemographics() {
 			return customerService.maritalDemographics();
 		}
-		@GetMapping("/demographics/householdsize")
+		@GetMapping("/customer/demographics/householdsize")
 		public List<IHouseholdDemographics> householdSizeDemographics() {
 			return customerService.householdSizeDemographics();
 		}	
-		@GetMapping("/demographics/gender")
+		@GetMapping("/customer/demographics/gender")
 		public List<IGenderDemographic> genderDemographic() {
 			return customerService.genderDemographic();
 		}

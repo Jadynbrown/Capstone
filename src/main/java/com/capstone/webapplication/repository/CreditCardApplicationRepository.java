@@ -22,8 +22,8 @@ public interface CreditCardApplicationRepository extends JpaRepository<CreditCar
 	//if there is time these need to be changed to jpql queries
 	
 	//2. Count of credit cards by day, month, year
-	@Query(value = "SELECT credit_card_application_apply_date as applicationDate, count(*) as countOfApplication FROM credit_card_application WHERE date(credit_card_application_apply_date) = date(?1)", nativeQuery = true)
-	List<IDateCount> countApplicationsByDate(Date day); 
+	@Query(value = " SELECT credit_card_application_apply_date as applicationDate, count(*) as countOfApplication FROM credit_card_application  WHERE (credit_card_application_apply_date) = ?1", nativeQuery = true)
+	List<IDateCount> countApplicationsByDate(String date); 
 	@Query(value = "select monthname(credit_card_application_apply_date)  as applicationDate , count( * ) as countOfApplication FROM credit_card_application GROUP BY month(credit_card_application_apply_date)", nativeQuery = true)
 	List<IDateCount> countApplicationsByMonth(); 
 	@Query(value = "select year(credit_card_application_apply_date)  as applicationDate , count( * ) as countOfApplication FROM credit_card_application GROUP BY YEAR(credit_card_application_apply_date)", nativeQuery = true)
@@ -55,8 +55,9 @@ public interface CreditCardApplicationRepository extends JpaRepository<CreditCar
 	IRejectReponseTime averageTimeToReject();
 	
 	
-	@Query(value = "select count(*) as numberOfCustomers, region as region from customers group by region", nativeQuery = true)
-	List<IRegionSale> regionalSales();//Edit to actually query only customers with credit cards????
+	//@Query(value = "select count(*) as numberOfCustomers, region as region from customers group by region", nativeQuery = true)
+	@Query(value = "select count(*) as numberOfCustomers, region as region from customers where customer_id in (select distinct customer_customer_id from credit_card) group by region", nativeQuery = true)
+	List<IRegionSale> regionalSales();
 	
 	
 	

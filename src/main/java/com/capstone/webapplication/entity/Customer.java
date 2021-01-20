@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -22,6 +24,7 @@ import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -42,7 +45,7 @@ public class Customer {
 	Character marital_Status; 
 	@Column
 	Integer income; 
-	@Column
+	@Column(unique=true)
 	Integer ssn;
 	@Column
 	Integer zip_Code;
@@ -58,24 +61,58 @@ public class Customer {
 	String employment;
 	
 	@Column
+	@NotNull(message = "Customer Name is Required")
 	String name; 
 	
+	
+	
 	@JsonManagedReference
-	@OneToOne(targetEntity = CreditCardApplication.class,  fetch = FetchType.LAZY)
-	@LazyToOne(LazyToOneOption.PROXY)
+	@OneToOne(targetEntity = CreditCardApplication.class)
 	private CreditCardApplication creditCardApplication;
 
 	@JsonManagedReference
-	@OneToOne(targetEntity = LoanApplication.class,  fetch = FetchType.LAZY)
-	@LazyToOne(LazyToOneOption.PROXY)
+	@OneToOne(targetEntity = LoanApplication.class)	
 	private LoanApplication loanApplication;
 
+//	@JsonBackReference
+//	@OneToOne(targetEntity = CreditCard.class, mappedBy = "customer", fetch = FetchType.LAZY)
+//	private CreditCard creditCard; 
+	
 	@JsonBackReference
-	@OneToOne(targetEntity = CreditCard.class, mappedBy = "customer", fetch = FetchType.LAZY)
+	@OneToOne(targetEntity = CreditCard.class,  mappedBy = "customer")
 	private CreditCard creditCard; 
+
 	
 	
+	public Customer(Integer customer_Id, Integer mobile_Number, Character gender, Date date_Of_Birth,
+			Character marital_Status, Integer income, Integer ssn, Integer zip_Code, String state, String region,
+			Integer user_Id, Integer household_size, String employment, String name,
+			CreditCardApplication creditCardApplication, LoanApplication loanApplication, CreditCard creditCard) {
+		super();
+		this.customer_Id = customer_Id;
+		this.mobile_Number = mobile_Number;
+		this.gender = gender;
+		this.date_Of_Birth = date_Of_Birth;
+		this.marital_Status = marital_Status;
+		this.income = income;
+		this.ssn = ssn;
+		this.zip_Code = zip_Code;
+		this.state = state;
+		this.region = region;
+		this.user_Id = user_Id;
+		this.household_size = household_size;
+		this.employment = employment;
+		this.name = name;
+		this.creditCardApplication = creditCardApplication;
+		this.loanApplication = loanApplication;
+		this.creditCard = creditCard;
+		
+	}
 	
+	public Customer() {
+		super();
+	}
+
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}
@@ -163,6 +200,19 @@ public class Customer {
 	public int getUser_Id() {
 		return user_Id;
 	}
+	public CreditCardApplication getCreditCardApplication() {
+		return creditCardApplication;
+	}
+	public void setCreditCardApplication(CreditCardApplication creditCardApplication) {
+		this.creditCardApplication = creditCardApplication;
+	}
+	public LoanApplication getLoanApplication() {
+		return loanApplication;
+	}
+	public void setLoanApplication(LoanApplication loanApplication) {
+		this.loanApplication = loanApplication;
+	}
+	
 	public void setUser_Id(int user_Id) {
 		this.user_Id = user_Id;
 	}

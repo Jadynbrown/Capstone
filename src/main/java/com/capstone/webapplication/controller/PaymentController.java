@@ -30,20 +30,20 @@ public class PaymentController {
 	@Autowired
 	private CreditCardService creditCardService; 
 	
-	@GetMapping("/creditCards/{creditCardId}/payments")
+	@GetMapping("/creditcards/{creditCardId}/payments")
 	public ResponseEntity<List<Payment>> getPayments(@PathVariable Integer creditCardId){
 		return ResponseEntity.ok(paymentData.getPayments(creditCardId));
 	}
 	
 	
 	
-	@GetMapping("/creditCards/{creditCardId}/payments/{paymentId}")
+	@GetMapping("/creditcards/{creditCardId}/payments/{paymentId}")
 	public Payment getPayment(@PathVariable Integer paymentId)
 	{
 		return paymentData.getPayment(paymentId);
 	}
 	
-	@PostMapping( "/creditCards/{creditCardId}/payments")
+	@PostMapping( "/creditcards/{creditCardId}/payments")
 	public Payment addCreditCard(@RequestBody Payment payment, @PathVariable Integer creditCardId)
 	{  
 		payment.setCreditCard(new CreditCard(creditCardId));

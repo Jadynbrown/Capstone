@@ -27,60 +27,57 @@ public class CreditCardController {
 	@Autowired
 	private CreditCardService creditCardService;
 
-	@PostMapping("/creditCards")
+	@PostMapping("/creditcards")
 	public CreditCard addCreditCard(@RequestBody CreditCard creditCard) {
 		return creditCardService.saveCreditCard(creditCard);
 	}
 
-	@PostMapping("/CreditCards")
-	public List<CreditCard> addCreditCards(@RequestBody List<CreditCard> creditCards) {
-		return creditCardService.saveCreditCards(creditCards);
-	}
+	
 
-	@GetMapping("/creditCards")
+	@GetMapping("/creditcards")
 	@ResponseBody
 	public List<CreditCard> findAllCreditCards() {
 		return creditCardService.getCreditCards();
 	}
 
-	@GetMapping("/creditCards/types")
+	@GetMapping("/creditcards/types")
 	@ResponseBody
 	public List<String> findCreditCardtypes() {
 		return creditCardService.getCreditCardType();
 	}
 	
-	@GetMapping("/creditCards/disContinued/income")
+	@GetMapping("/creditcards/discontinued/income")
 	@ResponseBody
 	public List<IIncomeCount> getCountByIncomeCounts() {
 		return creditCardService.getCountByIncomeCounts();
 	}
 	
-	@GetMapping("/creditCards/disContinued/state")
+	@GetMapping("/creditcards/discontinued/state")
 	@ResponseBody
 	public List<IStateCount> getCountByState() {
 		return creditCardService.getCountByState();
 	}
 	
-	@GetMapping("/creditCards/disContinued/maritalStatus")
+	@GetMapping("/creditcards/discontinued/maritalstatus")
 	@ResponseBody
 	public List<IMaritalStatusCount> getCountByMaritalStatus() {
 		return creditCardService.getCountByMaritalStatus();
 	}
 	
-	@GetMapping("/creditCards/disContinued/reason")
+	@GetMapping("/creditcards/discontinued/reason")
 	@ResponseBody
 	public List<INameReason> getNameAndReason() {
 		return creditCardService.getNameAndReason();
 	}
 
 
-	@GetMapping("/creditCards/expiry")
+	@GetMapping("/creditcards/expiry")
 	@ResponseBody
 	public List<CreditCard> findCreditCardsExpiring() {
 		return creditCardService.getCreditCardExpiring();
 	}
 
-	@GetMapping("/creditCards/{id}")
+	@GetMapping("/creditcards/{id}")
 	public ResponseEntity<CreditCard> findCreditCardById(@PathVariable(value = "id") Integer id) {
 		CreditCard creditCard = creditCardService.getCreditCardById(id);
 		if (creditCard == null) {
@@ -90,7 +87,7 @@ public class CreditCardController {
 		return ResponseEntity.ok().body(creditCard);
 	}
 
-	@DeleteMapping("/creditCard/{id}")
+	@DeleteMapping("/creditcard/{id}")
 	public String deleteCreditCard(@PathVariable Integer id) {
 		return creditCardService.deleteCreditCard(id);
 	}

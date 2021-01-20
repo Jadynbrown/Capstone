@@ -55,7 +55,7 @@ public class LoanApplication {
 
 
 	@JsonBackReference
-	@OneToOne(targetEntity = Customer.class, mappedBy = "creditCardApplication", fetch = FetchType.LAZY)
+	@OneToOne(targetEntity = Customer.class, mappedBy = "loanApplication")
 	private Customer customer;
 
 	public LoanApplication() {
